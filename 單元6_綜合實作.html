@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>單元 6：綜合實作 - Claude Code 企業培訓</title>
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+
+  <!-- Highlight.js Theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/monokai.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/custom.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ================================
+           封面
+           ================================ -->
+      <section class="title-slide">
+        <div class="section-number">06</div>
+        <h1>綜合實作</h1>
+        <div class="subtitle">Claude Code 企業培訓</div>
+        <div class="meta">45 分鐘</div>
+      </section>
+
+      <!-- ================================
+           本單元大綱
+           ================================ -->
+      <section>
+        <h2>本單元大綱</h2>
+        <ul class="toc-list">
+          <li><span class="section-num">6.1</span> 完整專案實戰（待辦清單 App）</li>
+          <li><span class="section-num">6.2</span> Q&A 與課後資源</li>
+          <li><span class="section-num">6.3</span> 課程總結</li>
+        </ul>
+        <div class="tip-box" style="margin-top: 1.5em;">
+          這是最後一個單元，我們將綜合運用前面所學的所有技能！
+        </div>
+      </section>
+
+      <!-- ================================
+           實作目標
+           ================================ -->
+      <section>
+        <h2>實作目標</h2>
+        <p class="big-text">綜合運用前面學到的所有技能，完成一個小專案</p>
+        <table style="margin-top: 1em;">
+          <thead>
+            <tr>
+              <th>你將練習</th>
+              <th>對應單元</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>用 SDD 釐清需求</td>
+              <td>單元 4</td>
+            </tr>
+            <tr>
+              <td>用 Plan Mode 規劃</td>
+              <td>單元 3</td>
+            </tr>
+            <tr>
+              <td>設定 CLAUDE.md</td>
+              <td>單元 2</td>
+            </tr>
+            <tr>
+              <td>使用 Skills</td>
+              <td>單元 5</td>
+            </tr>
+            <tr>
+              <td>驗證機制</td>
+              <td>單元 4</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ================================
+           6.1 完整專案實戰
+           ================================ -->
+      <section>
+        <h2>6.1 完整專案實戰</h2>
+      </section>
+
+      <section>
+        <h2>任務：建立一個「待辦清單 App」</h2>
+        <div class="key-point">
+          <h4>需求概述</h4>
+          <p>一個簡單的 To-Do List 網頁</p>
+          <p>可以新增、完成、刪除待辦事項</p>
+          <p>資料儲存在 localStorage</p>
+        </div>
+        <p style="margin-top: 1em;">接下來，我們將用 5 個步驟完成這個專案：</p>
+        <ol>
+          <li>用 SDD 釐清需求</li>
+          <li>用 Plan Mode 規劃</li>
+          <li>設定 CLAUDE.md</li>
+          <li>分步實作</li>
+          <li>驗證</li>
+        </ol>
+      </section>
+
+      <!-- Step 1: SDD 釐清需求 -->
+      <section>
+        <h2>Step 1：用 SDD 釐清需求</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">我想做一個待辦清單 App，<strong>先不要寫，幫我釐清需求</strong></div>
+          </div>
+        </div>
+        <div class="tip-box">
+          記得魔法咒語：「先不要寫，幫我釐清需求」
+        </div>
+      </section>
+
+      <section>
+        <h2>Step 1：Claude 的反問</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              好的，讓我確認幾個問題：<br><br>
+              <strong>基本功能</strong><br>
+              Q1: 需要哪些操作？新增、標記完成、刪除、編輯？<br><br>
+              <strong>進階功能</strong><br>
+              Q2: 需要截止日期嗎？<br>
+              Q3: 需要優先級嗎？<br>
+              Q4: 需要分類嗎？<br><br>
+              <strong>資料儲存</strong><br>
+              Q5: 存在哪裡？localStorage 還是後端資料庫？<br><br>
+              <strong>UI</strong><br>
+              Q6: 有特定風格要求嗎？
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Step 1：你的回答</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">
+              基本功能都要<br>
+              需要截止日期<br>
+              不用優先級和分類<br>
+              存 localStorage<br>
+              簡單乾淨就好
+            </div>
+          </div>
+        </div>
+        <div class="key-point" style="margin-top: 1em;">
+          <h4>SDD 的價值</h4>
+          <p>透過反問，需求從模糊變清晰</p>
+          <p>避免 Claude 亂猜、做出不需要的功能</p>
+        </div>
+      </section>
+
+      <!-- Step 2: Plan Mode -->
+      <section>
+        <h2>Step 2：用 Plan Mode 規劃</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">/plan 開始規劃</div>
+          </div>
+        </div>
+        <p style="margin-top: 1em;">Claude 會產生完整的實作計畫...</p>
+      </section>
+
+      <section>
+        <h2>Step 2：Claude 的計畫</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              <strong>【待辦清單 App 實作計畫】</strong><br><br>
+              <strong>Phase 1: 專案設定</strong><br>
+              - 建立 React + TypeScript 專案<br>
+              - 設定 Tailwind CSS<br>
+              - 建立 CLAUDE.md<br><br>
+              <strong>Phase 2: 資料層</strong><br>
+              - 定義 Todo 型別<br>
+              - 實作 localStorage 操作<br>
+              - 建立 useTodos hook
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Step 2：計畫（續）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              <strong>Phase 3: UI 元件</strong><br>
+              - TodoInput（新增輸入）<br>
+              - TodoItem（單一項目）<br>
+              - TodoList（列表）<br><br>
+              <strong>Phase 4: 功能實作</strong><br>
+              - 新增待辦、標記完成、刪除待辦、編輯待辦<br><br>
+              <strong>Phase 5: 驗證</strong><br>
+              - 手動測試所有功能<br>
+              - 確認 localStorage 持久化<br><br>
+              這個計畫 OK 嗎？
+            </div>
+          </div>
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">OK，開始執行</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 3: CLAUDE.md -->
+      <section>
+        <h2>Step 3：設定 CLAUDE.md</h2>
+        <pre><code class="language-markdown"># 待辦清單 App
+
+## 技術棧
+- React 18
+- TypeScript
+- Tailwind CSS
+- localStorage
+
+## 專案結構
+src/
+├── components/
+│   ├── TodoInput.tsx
+│   ├── TodoItem.tsx
+│   └── TodoList.tsx
+├── hooks/
+│   └── useTodos.ts
+├── types/
+│   └── todo.ts
+└── App.tsx</code></pre>
+      </section>
+
+      <section>
+        <h2>Step 3：CLAUDE.md（續）</h2>
+        <pre><code class="language-markdown">## 程式碼規範
+- 元件用 PascalCase
+- 函式用 camelCase
+- 用 FC 定義 React 元件
+
+## 資料結構
+```typescript
+interface Todo {
+  id: string;
+  title: string;
+  completed: boolean;
+  dueDate?: string;
+  createdAt: string;
+}
+```</code></pre>
+        <div class="tip-box">
+          CLAUDE.md 確保 Claude 按照你的規範寫程式
+        </div>
+      </section>
+
+      <!-- Step 4: 分步實作 -->
+      <section>
+        <h2>Step 4：分步實作 - Phase 1</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">先建立專案和設定</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              [建立 React + TypeScript 專案]<br>
+              [安裝 Tailwind CSS]<br>
+              [建立 CLAUDE.md]<br><br>
+              完成！專案結構已建立
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Step 4：分步實作 - Phase 2</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">實作資料層</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              [建立 types/todo.ts]<br>
+              [建立 hooks/useTodos.ts]<br><br>
+              包含功能：<br>
+              - addTodo<br>
+              - toggleTodo<br>
+              - deleteTodo<br>
+              - editTodo<br>
+              - localStorage 自動同步
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Step 4：分步實作 - Phase 3</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">實作 UI 元件</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              [建立 TodoInput.tsx]<br>
+              [建立 TodoItem.tsx]<br>
+              [建立 TodoList.tsx]<br>
+              [修改 App.tsx 整合元件]<br><br>
+              UI 元件已完成！
+            </div>
+          </div>
+        </div>
+        <div class="key-point" style="margin-top: 1em;">
+          <h4>分步實作的好處</h4>
+          <p>每一步都能確認，不會一次改太多出問題</p>
+        </div>
+      </section>
+
+      <!-- Step 5: 驗證 -->
+      <section>
+        <h2>Step 5：驗證所有功能</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">幫我驗證所有功能</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              好的，我來逐一測試：<br><br>
+              [啟動開發伺服器]<br>
+              [開啟瀏覽器]
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Step 5：驗證結果</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              <strong>測試 1: 新增待辦</strong><br>
+              - 輸入「測試待辦」，按下新增<br>
+              - 待辦出現在列表中<br><br>
+              <strong>測試 2: 標記完成</strong><br>
+              - 點擊待辦旁的勾選框<br>
+              - 待辦顯示為已完成（刪除線）<br><br>
+              <strong>測試 3: 刪除待辦</strong><br>
+              - 點擊刪除按鈕<br>
+              - 待辦從列表消失
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Step 5：驗證結果（續）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              <strong>測試 4: 編輯待辦</strong><br>
+              - 雙擊待辦文字<br>
+              - 修改內容<br>
+              - 內容已更新<br><br>
+              <strong>測試 5: localStorage 持久化</strong><br>
+              - 重新整理頁面<br>
+              - 資料還在<br><br>
+              <strong style="color: #22C55E;">全部通過！</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>實作小結</h2>
+        <div class="key-point">
+          <h4>完整專案實戰 5 步驟</h4>
+          <p><strong>Step 1</strong>：用 SDD 釐清需求（魔法咒語）</p>
+          <p><strong>Step 2</strong>：用 Plan Mode 規劃（/plan）</p>
+          <p><strong>Step 3</strong>：設定 CLAUDE.md（專案規範）</p>
+          <p><strong>Step 4</strong>：分步實作（一次一個 Phase）</p>
+          <p><strong>Step 5</strong>：驗證（讓 Claude 自己測）</p>
+        </div>
+      </section>
+
+      <!-- ================================
+           6.2 Q&A 與課後資源
+           ================================ -->
+      <section>
+        <h2>6.2 Q&A 與課後資源</h2>
+      </section>
+
+      <section>
+        <h2>成果展示引導</h2>
+        <p>展示你的成果時，可以分享：</p>
+        <table>
+          <thead>
+            <tr>
+              <th>展示項目</th>
+              <th>重點</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>專案結構</strong></td>
+              <td>展示你的檔案結構</td>
+            </tr>
+            <tr>
+              <td><strong>CLAUDE.md</strong></td>
+              <td>展示你的設定</td>
+            </tr>
+            <tr>
+              <td><strong>功能 Demo</strong></td>
+              <td>實際操作展示</td>
+            </tr>
+            <tr>
+              <td><strong>學到什麼</strong></td>
+              <td>分享你的心得</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Q&A：程式碼不對怎麼辦？</h2>
+        <div class="key-point">
+          <h4>解決方案</h4>
+          <p>1. 給更具體的需求描述</p>
+          <p>2. 提供驗證測試案例</p>
+          <p>3. 讓 Claude 解釋它的程式碼</p>
+          <p>4. 分步執行，每步確認</p>
+        </div>
+        <div class="tip-box" style="margin-top: 1em;">
+          大部分問題都是需求不夠清楚造成的
+        </div>
+      </section>
+
+      <section>
+        <h2>Q&A：Context 滿了怎麼辦？</h2>
+        <div class="key-point">
+          <h4>解決方案</h4>
+          <p>1. 用 <code>/compact</code> 壓縮對話</p>
+          <p>2. 用 <code>/clear</code> 清除不需要的對話</p>
+          <p>3. 只引用需要的檔案（<code>@specific-file.ts</code>）</p>
+          <p>4. 維持良好的 CLAUDE.md</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Q&A：什麼時候用 Plan Mode？</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>適合用 Plan Mode</th>
+              <th>不需要 Plan Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>新功能（多檔案異動）</td>
+              <td>簡單問答</td>
+            </tr>
+            <tr>
+              <td>重構</td>
+              <td>單檔案小修改</td>
+            </tr>
+            <tr>
+              <td>架構變更</td>
+              <td>Debug 單一問題</td>
+            </tr>
+            <tr>
+              <td>不確定怎麼做時</td>
+              <td>已經很清楚要做什麼</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Q&A：MCP 和 Skill 怎麼選？</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>情境</th>
+              <th>推薦方案</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>涉及認證（密碼、Token）</td>
+              <td><strong>MCP</strong></td>
+            </tr>
+            <tr>
+              <td>單純流程自動化</td>
+              <td><strong>Skill</strong></td>
+            </tr>
+            <tr>
+              <td>一次性腳本</td>
+              <td><strong>Skill + Python</strong></td>
+            </tr>
+            <tr>
+              <td>需要外部 API</td>
+              <td><strong>MCP</strong></td>
+            </tr>
+            <tr>
+              <td>重複使用的工作流程</td>
+              <td><strong>Skill</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>課後資源：官方文件</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>資源</th>
+              <th>網址</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Claude Code 官方文件</strong></td>
+              <td>docs.anthropic.com/claude-code</td>
+            </tr>
+            <tr>
+              <td><strong>MCP 官方文件</strong></td>
+              <td>modelcontextprotocol.io</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 1em;"><strong>推薦閱讀：</strong></p>
+        <ul>
+          <li>kaochenlong 的 SDD 文章</li>
+          <li>Boris 的 Claude Code 13 招</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>課後資源：推薦 MCP/Plugin</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Plugin</th>
+              <th>功能</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Context7</strong></td>
+              <td>查最新技術文件</td>
+            </tr>
+            <tr>
+              <td><strong>Playwright</strong></td>
+              <td>瀏覽器自動化</td>
+            </tr>
+            <tr>
+              <td><strong>PostgreSQL</strong></td>
+              <td>資料庫操作</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 1em;"><strong>推薦 Skills：</strong></p>
+        <ul>
+          <li><code>ui-ux-pro-max</code>：專業 UI 設計</li>
+          <li><code>frontend-design</code>：前端設計</li>
+          <li><code>code-review</code>：程式碼審查</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>課後資源：社群</h2>
+        <div class="key-point">
+          <h4>加入社群，持續學習</h4>
+          <p><strong>Claude Code Discord</strong>：官方社群</p>
+          <p><strong>GitHub Discussions</strong>：技術討論</p>
+        </div>
+        <div class="tip-box" style="margin-top: 1em;">
+          遇到問題時，社群是很好的求助管道
+        </div>
+      </section>
+
+      <!-- ================================
+           6.3 課程總結
+           ================================ -->
+      <section>
+        <h2>6.3 課程總結</h2>
+      </section>
+
+      <section>
+        <h2>課程總結表：6 單元學了什麼</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>單元</th>
+              <th>重點</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. 核心概念</strong></td>
+              <td>網頁版 vs Claude Code、VSCode 操作</td>
+            </tr>
+            <tr>
+              <td><strong>2. Context 工程</strong></td>
+              <td>CLAUDE.md、Context 管理</td>
+            </tr>
+            <tr>
+              <td><strong>3. 模式與權限</strong></td>
+              <td>三種模式、Permission 設定</td>
+            </tr>
+            <tr>
+              <td><strong>4. SDD 與驗證</strong></td>
+              <td>規格驅動開發、驗證機制</td>
+            </tr>
+            <tr>
+              <td><strong>5. Skills 與 MCP</strong></td>
+              <td>Skills、MCP、Plugin</td>
+            </tr>
+            <tr>
+              <td><strong>6. 綜合實作</strong></td>
+              <td>完整專案實戰</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>核心心法</h2>
+        <div class="key-point">
+          <h4>四大核心心法</h4>
+          <p><strong>1. Claude Code = 工人，不只是顧問</strong></p>
+          <p style="color: var(--text-secondary); margin-left: 1.5em;">它真的會執行，要小心權限</p>
+          <p><strong>2. Context Engineering > Prompt Engineering</strong></p>
+          <p style="color: var(--text-secondary); margin-left: 1.5em;">管理好 AI 的記憶比寫好問題更重要</p>
+          <p><strong>3. SDD：先講清楚需求再動手</strong></p>
+          <p style="color: var(--text-secondary); margin-left: 1.5em;">「先不要寫，幫我釐清需求」</p>
+          <p><strong>4. 驗證是最重要的事</strong></p>
+          <p style="color: var(--text-secondary); margin-left: 1.5em;">給 Claude 驗證方式，品質提升 2-3 倍</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>實用咒語總整理</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>咒語</th>
+              <th>用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>先不要寫，幫我釐清需求</code></td>
+              <td>啟動 SDD 模式</td>
+            </tr>
+            <tr>
+              <td><code>/plan</code></td>
+              <td>進入規劃模式</td>
+            </tr>
+            <tr>
+              <td><code>/compact</code></td>
+              <td>壓縮對話、節省 Context</td>
+            </tr>
+            <tr>
+              <td><code>/context</code></td>
+              <td>查看 Context 使用量</td>
+            </tr>
+            <tr>
+              <td><code>@檔案名稱</code></td>
+              <td>引用特定檔案</td>
+            </tr>
+            <tr>
+              <td><code>幫我驗證</code></td>
+              <td>讓 Claude 自己測試</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section-slide">
+        <h2>恭喜完成課程！</h2>
+        <p style="color: var(--text-secondary); font-size: 1.3em;">你現在已經掌握了 Claude Code 的核心技能</p>
+        <div class="key-point" style="margin-top: 1.5em; text-align: center;">
+          <h4>記住</h4>
+          <p style="font-size: 1.4em;"><strong>熟能生巧</strong></p>
+          <p>多用、多練習，你會越來越順手！</p>
+        </div>
+      </section>
+
+      <!-- ================================
+           結尾
+           ================================ -->
+      <section class="section-slide">
+        <h2>謝謝！</h2>
+        <p style="color: var(--text-secondary); font-size: 1.2em;">Claude Code 企業培訓 - 全部課程完成</p>
+        <p style="margin-top: 2em;">
+          <a href="單元5_Skills與MCP.html" style="color: var(--accent-green);">← 上一單元</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="index.html" style="color: var(--accent-green);">返回目錄</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>

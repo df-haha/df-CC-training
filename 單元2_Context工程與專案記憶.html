@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>單元 2：Context 工程與專案記憶 - Claude Code 企業培訓</title>
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+
+  <!-- Highlight.js Theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/monokai.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/custom.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ================================
+           封面
+           ================================ -->
+      <section class="title-slide">
+        <div class="section-number">02</div>
+        <h1>Context 工程與專案記憶</h1>
+        <div class="subtitle">Claude Code 企業培訓</div>
+        <div class="meta">45 分鐘</div>
+      </section>
+
+      <!-- ================================
+           本單元大綱
+           ================================ -->
+      <section>
+        <h2>本單元大綱</h2>
+        <ul class="toc-list">
+          <li><span class="section-num">2.1</span> Prompt Engineering vs Context Engineering</li>
+          <li><span class="section-num">2.2</span> CLAUDE.md 入門</li>
+          <li><span class="section-num">2.3</span> Context 管理實戰</li>
+          <li><span class="section-num">2.4</span> 實作練習與回顧</li>
+        </ul>
+      </section>
+
+      <!-- ================================
+           2.1 Prompt Engineering vs Context Engineering
+           ================================ -->
+      <section>
+        <h2>2.1 Prompt Engineering vs Context Engineering</h2>
+      </section>
+
+      <section>
+        <h2>為什麼要先講這個？</h2>
+        <p class="big-text">在學習 CLAUDE.md 和 Context 管理之前，<br>我們要先搞懂一個更大的概念：</p>
+        <div class="key-point" style="margin-top: 1.5em;">
+          <h4>核心觀念</h4>
+          <p><strong>你和 AI 互動的方式，正在從「寫好問題」進化到「管理記憶」</strong></p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Prompt Engineering（提示工程）</h2>
+        <p><strong>定義：設計單次輸入，讓 AI 產出最佳回應</strong></p>
+        <table>
+          <thead>
+            <tr>
+              <th>技巧</th>
+              <th>說明</th>
+              <th>範例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>角色設定</strong></td>
+              <td>告訴 AI 扮演什麼角色</td>
+              <td>「你是一個資深 React 工程師」</td>
+            </tr>
+            <tr>
+              <td><strong>任務描述</strong></td>
+              <td>清楚說明要做什麼</td>
+              <td>「幫我寫一個登入表單元件」</td>
+            </tr>
+            <tr>
+              <td><strong>輸出格式</strong></td>
+              <td>指定回答格式</td>
+              <td>「用 markdown 表格呈現」</td>
+            </tr>
+            <tr>
+              <td><strong>Few-shot</strong></td>
+              <td>給幾個範例</td>
+              <td>「範例：輸入 apple → 蘋果」</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Prompt Engineering 的問題</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">我要做一個 React 專案，用 TypeScript，用 Tailwind...<br>幫我寫一個 Button 元件</div>
+          </div>
+          <div class="chat-msg user" style="margin-top: 1em;">
+            <div class="sender">5 分鐘後，新對話</div>
+            <div class="content">我要做一個 React 專案，用 TypeScript，用 Tailwind... <span style="color: var(--error-color);">← 又要說一次！</span><br>幫我寫一個 Input 元件</div>
+          </div>
+          <div class="chat-msg user" style="margin-top: 1em;">
+            <div class="sender">10 分鐘後，新對話</div>
+            <div class="content">我要做一個 React 專案... <span style="color: var(--error-color);">← 每次都要重複！</span></div>
+          </div>
+        </div>
+        <p style="text-align: center; margin-top: 1em;"><strong>這就像每天上班都要重新自我介紹一樣累</strong></p>
+      </section>
+
+      <section>
+        <h2>Context Engineering（脈絡工程）</h2>
+        <p><strong>定義：管理 AI 的「工作記憶」，讓它持續理解你的專案</strong></p>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">CLAUDE.md 已經寫好</div>
+            <div class="content">
+              - 這是 React 專案<br>
+              - 用 TypeScript<br>
+              - 用 Tailwind CSS<br>
+              - 元件放 src/components/
+            </div>
+          </div>
+          <div class="chat-msg user" style="margin-top: 1em;">
+            <div class="sender">你只要說</div>
+            <div class="content">「幫我寫一個 Button 元件」</div>
+          </div>
+        </div>
+        <p style="margin-top: 1em;">Claude <strong>自動知道</strong>要用 React + TypeScript + Tailwind，<br>而且會把檔案放在正確的位置。</p>
+      </section>
+
+      <section>
+        <h2>兩者的核心差異</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>維度</th>
+              <th>Prompt Engineering</th>
+              <th>Context Engineering</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>關注什麼</strong></td>
+              <td>「這句話怎麼說」</td>
+              <td>「AI 腦中有什麼」</td>
+            </tr>
+            <tr>
+              <td><strong>時間範圍</strong></td>
+              <td>單次對話</td>
+              <td>整個專案週期</td>
+            </tr>
+            <tr>
+              <td><strong>目標</strong></td>
+              <td>得到精準回答</td>
+              <td>持續高品質協作</td>
+            </tr>
+            <tr>
+              <td><strong>工具</strong></td>
+              <td>提示詞技巧</td>
+              <td>CLAUDE.md、/compact、/clear</td>
+            </tr>
+            <tr>
+              <td><strong>比喻</strong></td>
+              <td>寫一封好的 Email</td>
+              <td>建立長期合作關係</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>為什麼 Context Engineering 越來越重要？</h2>
+        <p><strong>1. AI Agent 時代來臨</strong></p>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>以前</h4>
+            <p>你問一個問題，AI 回答一次，結束</p>
+          </div>
+          <div class="vs-divider">→</div>
+          <div class="vs-card right">
+            <h4>現在</h4>
+            <p>AI Agent 持續幫你：寫程式、跑測試、修 Bug、部署</p>
+            <p>需要<strong>「長期記憶」</strong>才能連貫工作</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>為什麼 Context Engineering 越來越重要？</h2>
+        <p><strong>2. Context 決定品質上限</strong></p>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>Context A</h4>
+            <p>只有這段程式碼</p>
+            <p style="color: var(--text-muted);">→ AI 給出通用建議</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>Context B</h4>
+            <p>有整個專案背景、效能要求、現有架構</p>
+            <p style="color: var(--accent-green);">→ AI 給出針對性的最佳方案</p>
+          </div>
+        </div>
+        <p style="text-align: center; margin-top: 1em;"><strong>同樣的 Prompt，不同 Context，結果天差地遠！</strong></p>
+      </section>
+
+      <section>
+        <h2>為什麼 Context Engineering 越來越重要？</h2>
+        <p><strong>3. 複利效應</strong></p>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">好的 Context 管理 = 知識累積</div>
+            <div class="content">
+              第 1 天：設定好 CLAUDE.md<br>
+              第 2 天：Claude 已經知道專案背景<br>
+              第 3 天：Claude 記得之前的設計決策<br>
+              ...<br>
+              第 30 天：Claude 對你的專案瞭若指掌
+            </div>
+          </div>
+        </div>
+        <p style="text-align: center; margin-top: 1em;"><strong>越用越順，這就是複利</strong></p>
+      </section>
+
+      <section>
+        <h2>白話總結</h2>
+        <div class="key-point">
+          <h4>核心差異</h4>
+          <p><strong>Prompt Engineering = 「怎麼問問題」</strong></p>
+          <p style="margin-left: 1.5em;">→ 單次互動的技巧，像面試時怎麼回答問題</p>
+          <p style="margin-top: 0.8em;"><strong>Context Engineering = 「AI 腦中有什麼」</strong></p>
+          <p style="margin-left: 1.5em;">→ 長期協作的基礎，像和同事建立默契</p>
+        </div>
+        <p style="text-align: center; margin-top: 1em; font-size: 1.2em;">兩者都重要，但 <strong>Context Engineering 是未來趨勢！</strong></p>
+      </section>
+
+      <!-- ================================
+           2.2 CLAUDE.md 入門
+           ================================ -->
+      <section>
+        <h2>2.2 CLAUDE.md 入門</h2>
+      </section>
+
+      <section>
+        <h2>什麼是 CLAUDE.md？</h2>
+        <p class="big-text">CLAUDE.md 是放在專案根目錄的設定檔，<br>Claude 每次開始對話時都會自動讀取。</p>
+        <div class="key-point" style="margin-top: 1em;">
+          <h4>作用</h4>
+          <p>讓 Claude 一開始就知道這個專案的背景</p>
+        </div>
+        <p style="margin-top: 1em;">就像新同事第一天上班，你給他一份<strong>「專案說明文件」</strong>，<br>他馬上就能進入狀況，不用每件事都從頭解釋。</p>
+      </section>
+
+      <section>
+        <h2>快速建立</h2>
+        <p>在 Claude Code 對話框輸入：</p>
+        <pre><code class="language-bash">/init</code></pre>
+        <p style="margin-top: 1em;">Claude 會自動掃描專案，產生一個基本的 CLAUDE.md。</p>
+        <div class="tip-box" style="margin-top: 1.5em;">
+          這是最快速的起點，之後可以根據需要自行調整內容
+        </div>
+      </section>
+
+      <section>
+        <h2>CLAUDE.md 的結構（上）</h2>
+        <pre><code class="language-markdown"># 專案名稱
+
+## 專案簡介
+一句話描述這個專案是做什麼的
+
+## 技術棧
+- 框架：React 18
+- 語言：TypeScript
+- 樣式：Tailwind CSS
+- 狀態管理：Zustand
+
+## 專案結構
+src/
+├── components/   # UI 元件
+├── pages/        # 頁面
+├── hooks/        # 自定義 Hooks
+├── utils/        # 工具函式
+└── types/        # TypeScript 型別</code></pre>
+      </section>
+
+      <section>
+        <h2>CLAUDE.md 的結構（下）</h2>
+        <pre><code class="language-markdown">## 開發指令
+- `npm run dev` - 啟動開發伺服器
+- `npm run build` - 打包
+- `npm run test` - 執行測試
+
+## 程式碼規範
+- 使用 ESLint + Prettier
+- 元件命名用 PascalCase
+- 函式命名用 camelCase
+- 檔案命名用 kebab-case
+
+## 注意事項
+- 不要直接修改 node_modules
+- API 金鑰放在 .env，不要提交到 Git</code></pre>
+      </section>
+
+      <section>
+        <h2>要放什麼？</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>內容</th>
+              <th>為什麼</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>技術棧</strong></td>
+              <td>讓 Claude 知道用什麼框架/語言</td>
+            </tr>
+            <tr>
+              <td><strong>專案結構</strong></td>
+              <td>讓 Claude 知道檔案放哪裡</td>
+            </tr>
+            <tr>
+              <td><strong>命名規範</strong></td>
+              <td>讓 Claude 遵守團隊規則</td>
+            </tr>
+            <tr>
+              <td><strong>常用指令</strong></td>
+              <td>方便 Claude 幫你執行</td>
+            </tr>
+            <tr>
+              <td><strong>特殊注意事項</strong></td>
+              <td>避免 Claude 踩雷</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>不要放什麼？</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>內容</th>
+              <th>為什麼</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color: var(--error-color);">密碼 / API Key</strong></td>
+              <td>安全風險！會進 Context</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--error-color);">超長的文件</strong></td>
+              <td>浪費 Context 空間</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--error-color);">會頻繁變動的內容</strong></td>
+              <td>維護成本高</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--error-color);">其他專案的資訊</strong></td>
+              <td>會讓 Claude 搞混</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="danger-box" style="margin-top: 1em;">
+          絕對不要把機密資訊放進 CLAUDE.md！
+        </div>
+      </section>
+
+      <section>
+        <h2>CLAUDE.md 的價值</h2>
+        <div class="key-point">
+          <h4>小結</h4>
+          <p><strong>1. 省時間</strong>：不用每次都重複說明背景</p>
+          <p><strong>2. 一致性</strong>：Claude 會遵守你的規範</p>
+          <p><strong>3. 品質提升</strong>：有 Context 的回答更精準</p>
+          <p><strong>4. 團隊共享</strong>：新人也能快速用 Claude 協作</p>
+        </div>
+      </section>
+
+      <!-- ================================
+           2.3 Context 管理實戰
+           ================================ -->
+      <section>
+        <h2>2.3 Context 管理實戰</h2>
+      </section>
+
+      <section>
+        <h2>什麼是 Context？</h2>
+        <div class="key-point">
+          <h4>Context = Claude 的「短期記憶」</h4>
+          <p>把 Claude 想像成一個記憶有限的同事：</p>
+          <p>- 他能記住最近幾小時的對話</p>
+          <p>- 但記憶空間有上限</p>
+          <p>- 塞太多東西，舊的會被忘記</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>查看 Context 使用量</h2>
+        <p>在對話框輸入：</p>
+        <pre><code class="language-bash">/context</code></pre>
+        <p style="margin-top: 1em;">會顯示類似這樣的資訊：</p>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              Context 使用量：45,231 / 200,000 tokens (22.6%)<br><br>
+              組成：<br>
+              - 對話歷史：30,000 tokens<br>
+              - CLAUDE.md：5,000 tokens<br>
+              - 引用檔案：10,231 tokens
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Context 滿了會怎樣？</h2>
+        <pre><code>Context 使用量：195,000 / 200,000 tokens (97.5%)</code></pre>
+        <table>
+          <thead>
+            <tr>
+              <th>問題</th>
+              <th>影響</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>早期對話被「遺忘」</strong></td>
+              <td>Claude 忘記你之前說過什麼</td>
+            </tr>
+            <tr>
+              <td><strong>回答品質下降</strong></td>
+              <td>沒有完整脈絡，答案變不精準</td>
+            </tr>
+            <tr>
+              <td><strong>重複問問題</strong></td>
+              <td>Claude 會問已經討論過的事</td>
+            </tr>
+            <tr>
+              <td><strong>複雜任務容易出錯</strong></td>
+              <td>記不住前面的步驟</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>策略 1：/compact 壓縮對話</h2>
+        <pre><code class="language-bash">/compact</code></pre>
+        <p><strong>功能：</strong>壓縮對話歷史，保留重點，釋放 Context 空間</p>
+        <p style="margin-top: 1em;"><strong>什麼時候用：</strong></p>
+        <ul>
+          <li>Context 超過 70%</li>
+          <li>準備開始新任務</li>
+          <li>之前討論的內容不再需要細節</li>
+        </ul>
+        <div class="tip-box" style="margin-top: 1em;">
+          /compact 會保留對話的「精華」，不會完全清除
+        </div>
+      </section>
+
+      <section>
+        <h2>策略 2：/clear 清除對話</h2>
+        <pre><code class="language-bash">/clear</code></pre>
+        <p><strong>功能：</strong>完全清除對話，從頭開始</p>
+        <p style="margin-top: 1em;"><strong>什麼時候用：</strong></p>
+        <ul>
+          <li>完全換一個主題</li>
+          <li>Context 已經很亂</li>
+          <li>想要「乾淨的開始」</li>
+        </ul>
+        <div class="warning-box" style="margin-top: 1em;">
+          /clear 會完全清除對話！確定不需要之前的對話再用
+        </div>
+      </section>
+
+      <section>
+        <h2>策略 3：對話分段</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>不好的做法</h4>
+            <p>一個對話裡做 10 件事</p>
+            <p style="color: var(--error-color);">→ Context 爆炸</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>好的做法</h4>
+            <p>任務 1 → /compact → 任務 2 → /compact → 任務 3</p>
+            <p>或（不相關時）</p>
+            <p>任務 1 → /clear → 任務 2</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>策略 4：精準引用檔案</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>不好的做法</h4>
+            <pre><code>@src/</code></pre>
+            <p>把整個資料夾丟進 Context</p>
+            <p style="color: var(--error-color);">→ 佔用大量空間</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>好的做法</h4>
+            <pre><code>@src/components/Button.tsx</code></pre>
+            <p>只引用需要的檔案</p>
+            <p style="color: var(--accent-green);">→ 節省空間</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Context 工程工具總覽</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>工具</th>
+              <th>功能</th>
+              <th>使用時機</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>CLAUDE.md</code></td>
+              <td>專案長期記憶</td>
+              <td>專案開始時設定</td>
+            </tr>
+            <tr>
+              <td><code>/context</code></td>
+              <td>查看使用量</td>
+              <td>隨時檢查</td>
+            </tr>
+            <tr>
+              <td><code>/compact</code></td>
+              <td>壓縮對話</td>
+              <td>Context > 70%</td>
+            </tr>
+            <tr>
+              <td><code>/clear</code></td>
+              <td>清除對話</td>
+              <td>換主題、重新開始</td>
+            </tr>
+            <tr>
+              <td><code>@file</code></td>
+              <td>精準引用檔案</td>
+              <td>只加入需要的資訊</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ================================
+           2.4 實作練習與回顧
+           ================================ -->
+      <section>
+        <h2>2.4 實作練習</h2>
+      </section>
+
+      <section>
+        <h2>練習 1：建立 CLAUDE.md</h2>
+        <ul>
+          <li>開啟任意專案資料夾</li>
+          <li>在 Claude Code 輸入 <code>/init</code></li>
+          <li>查看產生的 CLAUDE.md</li>
+          <li>根據需要修改內容</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>練習 2：Context 管理</h2>
+        <ul>
+          <li>執行 <code>/context</code> 查看目前使用量</li>
+          <li>進行幾輪對話（問問題、引用檔案）</li>
+          <li>再次執行 <code>/context</code>，觀察變化</li>
+          <li>執行 <code>/compact</code>，觀察 Context 變化</li>
+          <li>執行 <code>/clear</code>，體驗重新開始</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>本單元重點回顧</h2>
+        <div class="key-point">
+          <h4>核心觀念</h4>
+          <p><strong>1. Prompt vs Context Engineering</strong></p>
+          <p style="margin-left: 1.5em;">Prompt 是單次技巧，Context 是長期基礎</p>
+          <p><strong>2. CLAUDE.md 是專案的「說明書」</strong></p>
+          <p style="margin-left: 1.5em;">讓 Claude 一開始就知道背景，用 /init 快速建立</p>
+          <p><strong>3. Context 是有限的</strong></p>
+          <p style="margin-left: 1.5em;">用 /compact 壓縮、/clear 清除，維持效率</p>
+          <p><strong>4. 精準引用</strong></p>
+          <p style="margin-left: 1.5em;">用 @file 只加入需要的檔案，節省空間</p>
+        </div>
+      </section>
+
+      <!-- ================================
+           結尾
+           ================================ -->
+      <section class="section-slide">
+        <h2>單元 2 完成！</h2>
+        <p style="color: var(--text-secondary); font-size: 1.2em;">下一單元：操作模式與權限管理</p>
+        <p style="margin-top: 2em;">
+          <a href="單元1_核心概念與操作.html" style="color: var(--accent-green);">← 上一單元</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="index.html" style="color: var(--text-secondary);">返回目錄</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="單元3_操作模式與權限管理.html" style="color: var(--accent-green);">下一單元 →</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>

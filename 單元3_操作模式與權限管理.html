@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>單元 3：操作模式與權限管理 - Claude Code 企業培訓</title>
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+
+  <!-- Highlight.js Theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/monokai.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/custom.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ================================
+           封面
+           ================================ -->
+      <section class="title-slide">
+        <div class="section-number">03</div>
+        <h1>操作模式與權限管理</h1>
+        <div class="subtitle">Claude Code 企業培訓</div>
+        <div class="meta">45 分鐘</div>
+      </section>
+
+      <!-- ================================
+           本單元大綱
+           ================================ -->
+      <section>
+        <h2>本單元大綱</h2>
+        <ul class="toc-list">
+          <li><span class="section-num">3.1</span> 三種操作模式深度講解</li>
+          <li><span class="section-num">3.2</span> Plan Mode 深度操作</li>
+          <li><span class="section-num">3.3</span> Permission 設定完整指南</li>
+        </ul>
+      </section>
+
+      <!-- ================================
+           3.1 三種操作模式
+           ================================ -->
+      <section>
+        <h2>3.1 三種操作模式深度講解</h2>
+      </section>
+
+      <section>
+        <h2>Claude Code 的三種模式</h2>
+        <p class="big-text">想像你請了一個工人來家裡裝修：</p>
+        <table>
+          <thead>
+            <tr>
+              <th>模式</th>
+              <th>比喻</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Normal</strong></td>
+              <td>每做一步都問你</td>
+              <td>「我要拆這面牆，可以嗎？」</td>
+            </tr>
+            <tr>
+              <td><strong>Auto-accept</strong></td>
+              <td>放手讓他做</td>
+              <td>直接拆牆，不問你</td>
+            </tr>
+            <tr>
+              <td><strong>Plan</strong></td>
+              <td>先畫設計圖</td>
+              <td>「我打算這樣改，你看看？」</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Normal 模式（預設）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">幫我把 Button 改成紅色</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              我要修改 src/components/Button.tsx<br>
+              [顯示修改內容]<br><br>
+              確定要執行嗎？ <strong>[接受] [拒絕]</strong>
+            </div>
+          </div>
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">[點接受]</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">已修改完成</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Normal 模式特點</h2>
+        <div class="key-point">
+          <h4>特點</h4>
+          <p>每次修改檔案都會問你</p>
+          <p>每次執行指令都會問你</p>
+          <p><strong>最安全</strong>，適合學習階段</p>
+        </div>
+        <p style="margin-top: 1em;"><strong>適合情況：</strong></p>
+        <ul>
+          <li>剛開始用 Claude Code</li>
+          <li>重要專案，不能出錯</li>
+          <li>想了解 Claude 在做什麼</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Auto-accept 模式</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">幫我把 Button 改成紅色</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              [直接修改 src/components/Button.tsx]<br>
+              已修改完成<br><br>
+              <em style="color: var(--text-muted);">不會問你，直接做</em>
+            </div>
+          </div>
+        </div>
+        <div class="key-point" style="margin-top: 1em;">
+          <h4>特點</h4>
+          <p>不會問你確認</p>
+          <p>速度快，流暢</p>
+          <p><strong style="color: var(--warning-color);">可能改錯、刪錯</strong></p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Auto-accept 風險警示</h2>
+        <div class="danger-box">
+          Auto-accept 模式下，Claude 可能會：改錯檔案、執行危險指令、刪除重要資料
+        </div>
+        <p style="margin-top: 1em;"><strong>建議搭配：</strong></p>
+        <ul>
+          <li>Git 版本控制（可以 rollback）</li>
+          <li>Permission 設定（禁止危險操作）</li>
+        </ul>
+        <p style="margin-top: 1em;"><strong>適合情況：</strong></p>
+        <ul>
+          <li>熟悉 Claude Code 後</li>
+          <li>簡單重複的任務</li>
+          <li>有 Git 版本控制保底</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Plan 模式</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">我想加一個會員系統</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              好的，讓我先規劃一下：<br><br>
+              <strong>計畫：</strong><br>
+              1. 建立 User model<br>
+              2. 建立登入/註冊 API<br>
+              3. 建立前端登入頁面<br>
+              4. 加入 JWT 認證<br><br>
+              這個計畫 OK 嗎？要不要調整？
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Plan 模式特點</h2>
+        <div class="key-point">
+          <h4>特點</h4>
+          <p>只規劃，不動手</p>
+          <p>可以討論、修改計畫</p>
+          <p>確認後才執行</p>
+        </div>
+        <div class="vs-container" style="margin-top: 1em;">
+          <div class="vs-card left">
+            <h4>適合用 Plan Mode</h4>
+            <p>新功能開發（多檔案異動）</p>
+            <p>架構變更、重構程式碼</p>
+            <p>不確定怎麼做的任務</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>不需要 Plan Mode</h4>
+            <p>改錯字、加 log</p>
+            <p>簡單樣式調整</p>
+            <p>已經很明確的任務</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>切換模式的方式</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>方式</th>
+              <th>操作</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>快捷鍵</strong></td>
+              <td><code>Shift+Tab</code></td>
+              <td>循環切換：Normal → Auto-accept → Plan</td>
+            </tr>
+            <tr>
+              <td><strong>指令</strong></td>
+              <td><code>/plan</code></td>
+              <td>直接進入 Plan 模式</td>
+            </tr>
+            <tr>
+              <td><strong>介面按鈕</strong></td>
+              <td>點擊模式切換按鈕</td>
+              <td>在 Claude 對話視窗頂部</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip-box" style="margin-top: 1em;">
+          <code>Shift+Tab</code> 是最快的切換方式，記住這個快捷鍵！
+        </div>
+      </section>
+
+      <section>
+        <h2>三種模式選擇決策表</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>情境</th>
+              <th>推薦模式</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>剛開始用 Claude Code</td>
+              <td><strong>Normal</strong>（看清楚 Claude 在做什麼）</td>
+            </tr>
+            <tr>
+              <td>重要專案、不能出錯</td>
+              <td><strong>Normal</strong>（每步確認）</td>
+            </tr>
+            <tr>
+              <td>簡單重複任務、有 Git 保底</td>
+              <td><strong>Auto-accept</strong>（快速完成）</td>
+            </tr>
+            <tr>
+              <td>新功能開發、架構變更</td>
+              <td><strong>Plan</strong>（先規劃再動手）</td>
+            </tr>
+            <tr>
+              <td>複雜 Bug、不確定怎麼做</td>
+              <td><strong>Plan</strong>（讓 Claude 先提案）</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>模式比較總結</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>特性</th>
+              <th>Normal</th>
+              <th>Auto-accept</th>
+              <th>Plan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>安全性</td>
+              <td style="color: var(--accent-green);">最高</td>
+              <td style="color: var(--error-color);">最低</td>
+              <td style="color: var(--warning-color);">中等</td>
+            </tr>
+            <tr>
+              <td>速度</td>
+              <td style="color: var(--warning-color);">較慢</td>
+              <td style="color: var(--accent-green);">最快</td>
+              <td style="color: var(--warning-color);">中等</td>
+            </tr>
+            <tr>
+              <td>適合新手</td>
+              <td style="color: var(--accent-green);">是</td>
+              <td style="color: var(--error-color);">否</td>
+              <td style="color: var(--accent-green);">是</td>
+            </tr>
+            <tr>
+              <td>適合複雜任務</td>
+              <td>可以</td>
+              <td>不建議</td>
+              <td style="color: var(--accent-green);">最適合</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ================================
+           3.2 Plan Mode 深度操作
+           ================================ -->
+      <section>
+        <h2>3.2 Plan Mode 深度操作</h2>
+      </section>
+
+      <section>
+        <h2>Plan Mode 完整工作流程</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>步驟</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. 進入 Plan Mode</strong></td>
+              <td><code>Shift+Tab</code> 切換，或輸入 <code>/plan</code></td>
+            </tr>
+            <tr>
+              <td><strong>2. 描述需求</strong></td>
+              <td>「我想加一個會員系統」</td>
+            </tr>
+            <tr>
+              <td><strong>3. Claude 提出計畫</strong></td>
+              <td>列出步驟、需要修改的檔案、技術選型</td>
+            </tr>
+            <tr>
+              <td><strong>4. 討論修正</strong></td>
+              <td>「第 2 點改用 Context 而不是 Redux」</td>
+            </tr>
+            <tr>
+              <td><strong>5. 確認計畫</strong></td>
+              <td>「OK，就這個計畫」</td>
+            </tr>
+            <tr>
+              <td><strong>6. 切回 Normal 模式</strong></td>
+              <td><code>Shift+Tab</code> 切換</td>
+            </tr>
+            <tr>
+              <td><strong>7. 執行</strong></td>
+              <td>「開始執行計畫」</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>何時使用 Plan Mode？</h2>
+        <div class="vs-container">
+          <div class="vs-card right">
+            <h4>適合用 Plan Mode</h4>
+            <table>
+              <tbody>
+                <tr><td>新功能開發</td><td>涉及多個檔案，需要先規劃</td></tr>
+                <tr><td>重構程式碼</td><td>需要考慮影響範圍</td></tr>
+                <tr><td>架構變更</td><td>需要評估方案</td></tr>
+                <tr><td>複雜 Bug 修復</td><td>需要先分析原因</td></tr>
+                <tr><td>不確定怎麼做</td><td>讓 Claude 先提案</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card left">
+            <h4>不需要 Plan Mode</h4>
+            <table>
+              <tbody>
+                <tr><td>改錯字</td><td>直接改就好</td></tr>
+                <tr><td>加 console.log</td><td>一句話搞定</td></tr>
+                <tr><td>簡單樣式調整</td><td>直接做</td></tr>
+                <tr><td>已經很明確的任務</td><td>不用再規劃</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Plan Mode 實戰範例（上）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">/plan 我想幫這個專案加上深色模式</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              好的，讓我分析一下加入深色模式的計畫：<br><br>
+              <strong>計畫概覽</strong><br><br>
+              <strong>1. 設計系統</strong><br>
+              - 定義深色主題顏色變數<br>
+              - 建立主題切換機制<br><br>
+              <strong>2. 修改檔案</strong><br>
+              - tailwind.config.js：加入 darkMode 設定<br>
+              - src/contexts/ThemeContext.tsx：新增主題狀態管理<br>
+              - src/components/ThemeToggle.tsx：新增切換按鈕
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Plan Mode 實戰範例（下）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude（續）</div>
+            <div class="content">
+              <strong>3. 更新現有元件</strong><br>
+              - 所有元件加入 dark: 前綴樣式<br><br>
+              <strong>4. 儲存使用者偏好</strong><br>
+              - 使用 localStorage 記住選擇<br><br>
+              預估影響：約 15 個檔案<br><br>
+              這個方向 OK 嗎？有需要調整的地方嗎？
+            </div>
+          </div>
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">OK，但第 4 點我想用 cookie 而不是 localStorage，因為要支援 SSR</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              了解，更新計畫：<br><br>
+              <strong>4. 儲存使用者偏好</strong><br>
+              - 使用 cookie 記住選擇（支援 SSR）<br>
+              - 在 middleware 讀取並設定初始主題<br><br>
+              確定後我就開始執行！
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Plan Mode + SDD 預告</h2>
+        <div class="key-point">
+          <h4>下一單元會學到</h4>
+          <p>Plan Mode 搭配 <strong>規格驅動開發（SDD）</strong> 更有效</p>
+          <p>先釐清需求 → 再規劃 → 最後執行</p>
+          <p>這樣可以大幅減少「做完才發現不對」的情況</p>
+        </div>
+        <div class="tip-box" style="margin-top: 1em;">
+          單元 4 會詳細介紹如何結合 Plan Mode 與 SDD，敬請期待！
+        </div>
+      </section>
+
+      <section>
+        <h2>Plan Mode 小結</h2>
+        <div class="key-point">
+          <h4>Plan Mode 核心價值</h4>
+          <p><strong>1. 先思考再動手</strong> - 避免盲目開工</p>
+          <p><strong>2. 可以討論修改</strong> - 計畫不滿意可以調整</p>
+          <p><strong>3. 掌握全局</strong> - 知道會改哪些檔案、影響範圍</p>
+          <p><strong>4. 減少錯誤</strong> - 發現問題在計畫階段而非執行後</p>
+        </div>
+      </section>
+
+      <!-- ================================
+           3.3 Permission 設定
+           ================================ -->
+      <section>
+        <h2>3.3 Permission 設定完整指南</h2>
+      </section>
+
+      <section>
+        <h2>真實災難案例：AI Agent 誤刪整個 C 槽</h2>
+        <div class="danger-box">
+          某開發者讓 AI Agent 自動執行清理任務，Agent 誤判指令，執行了類似 <code>rm -rf C:\</code> 的命令。結果：整個系統毀損，資料全部遺失！
+        </div>
+        <p style="margin-top: 1em;"><strong>問題出在哪？</strong></p>
+        <ul>
+          <li>使用 Auto-accept 模式（AI 做什麼都自動同意）</li>
+          <li>沒有設定 Deny 規則（沒有「禁止清單」）</li>
+          <li>沒有任何安全網</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>教訓：權限設定不是選配！</h2>
+        <div class="key-point">
+          <h4>核心觀念</h4>
+          <p><strong>Claude Code 能直接操作你的電腦</strong></p>
+          <p>包括：修改檔案、執行指令、刪除資料</p>
+          <p>權限設定是<strong>保護你電腦的最後一道防線</strong></p>
+        </div>
+        <div class="warning-box" style="margin-top: 1em;">
+          即使你用 Normal 模式，設定 Deny 規則仍然很重要！<br>
+          因為你可能不小心點了「接受」
+        </div>
+      </section>
+
+      <section>
+        <h2>三層權限控制</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>層級</th>
+              <th>說明</th>
+              <th>安全性</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>層級 1</strong></td>
+              <td>互動式確認（Normal 模式）</td>
+              <td style="color: var(--accent-green);">最安全，每次都問你</td>
+            </tr>
+            <tr>
+              <td><strong>層級 2</strong></td>
+              <td>Permission 設定（白名單 + 黑名單）</td>
+              <td style="color: var(--warning-color);">可控，允許/禁止特定操作</td>
+            </tr>
+            <tr>
+              <td><strong>層級 3</strong></td>
+              <td>Bypass（跳過所有檢查）</td>
+              <td style="color: var(--error-color);">超危險！不建議使用</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>層級 1：Normal 模式（預設）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">我要執行 npm test，可以嗎？</div>
+          </div>
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">可以</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">我要刪除 temp.txt，可以嗎？</div>
+          </div>
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">可以</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">我要執行 rm -rf /，可以嗎？</div>
+          </div>
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content"><strong style="color: var(--error-color);">不可以！！！</strong></div>
+          </div>
+        </div>
+        <p><strong>優點：</strong>最安全 | <strong>缺點：</strong>每次都要點確認</p>
+      </section>
+
+      <section>
+        <h2>層級 2：Permission 設定</h2>
+        <p>用 <code>/permissions</code> 指令設定白名單和黑名單：</p>
+        <pre><code class="language-bash">/permissions</code></pre>
+        <div class="vs-container">
+          <div class="vs-card right">
+            <h4>Allow（白名單）- 不用問我</h4>
+            <p><code>npm test</code></p>
+            <p><code>npm run build</code></p>
+            <p><code>npm run dev</code></p>
+            <p><code>git status</code></p>
+            <p><code>git add</code></p>
+            <p><code>git commit</code></p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card left">
+            <h4>Deny（黑名單）- 絕對禁止</h4>
+            <p><code>rm -rf</code></p>
+            <p><code>rmdir /s /q C:\</code></p>
+            <p><code>npm publish</code></p>
+            <p><code>git push --force</code></p>
+            <p><code>drop database</code></p>
+            <p><code>format c:</code></p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Permission 設定效果</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              我要執行 npm test<br>
+              <em style="color: var(--accent-green);">[自動執行，不問你，因為在白名單]</em>
+            </div>
+          </div>
+        </div>
+        <div class="chat-demo" style="margin-top: 1em;">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              我要執行 rm -rf node_modules<br>
+              <strong style="color: var(--error-color);">這個指令被禁止了</strong><br>
+              <em style="color: var(--text-muted);">[不會執行]</em>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>層級 3：Bypass（危險！）</h2>
+        <pre><code class="language-bash"># 跳過所有安全檢查
+claude --dangerously-skip-permissions</code></pre>
+        <div class="danger-box">
+          這個指令會：跳過所有權限檢查、不問你任何確認、Claude 想做什麼就做什麼。<strong>強烈不建議使用！</strong>
+        </div>
+        <p style="margin-top: 1em;"><strong>唯一合理的使用情況：</strong></p>
+        <ul>
+          <li>在完全隔離的測試環境</li>
+          <li>你知道自己在做什麼</li>
+          <li>做好完整備份</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Permission 最佳實踐（1/2）</h2>
+        <p><strong>1. 設定合理的白名單</strong></p>
+        <table>
+          <thead>
+            <tr>
+              <th>類型</th>
+              <th>建議加入白名單的指令</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>npm/yarn</strong></td>
+              <td><code>npm test</code>、<code>npm run dev</code>、<code>npm run build</code></td>
+            </tr>
+            <tr>
+              <td><strong>Git 查看</strong></td>
+              <td><code>git status</code>、<code>git diff</code>、<code>git log</code></td>
+            </tr>
+            <tr>
+              <td><strong>檔案查看</strong></td>
+              <td><code>dir</code>、<code>type</code>、<code>more</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Permission 最佳實踐（2/2）</h2>
+        <p><strong>2. 設定重要的黑名單</strong></p>
+        <table>
+          <thead>
+            <tr>
+              <th>類型</th>
+              <th>一定要禁止的指令</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>刪除操作</strong></td>
+              <td><code>rm -rf</code>、<code>rmdir /s /q</code>、系統槽操作</td>
+            </tr>
+            <tr>
+              <td><strong>發布操作</strong></td>
+              <td><code>npm publish</code>、<code>docker push</code></td>
+            </tr>
+            <tr>
+              <td><strong>Git 危險操作</strong></td>
+              <td><code>git push --force</code>、<code>git reset --hard</code></td>
+            </tr>
+            <tr>
+              <td><strong>資料庫操作</strong></td>
+              <td><code>drop database</code>、<code>truncate table</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip-box" style="margin-top: 1em;">
+          即使設定了 Permission，也建議搭配 Git 版本控制，出錯可以 rollback
+        </div>
+      </section>
+
+      <section>
+        <h2>實作練習</h2>
+        <p><strong>練習 1：查看目前設定</strong></p>
+        <ul>
+          <li>執行 <code>/permissions</code> 查看目前的權限設定</li>
+        </ul>
+        <p style="margin-top: 1em;"><strong>練習 2：新增 Allow 規則</strong></p>
+        <ul>
+          <li>新增一個 Allow 規則：<code>npm test</code></li>
+        </ul>
+        <p style="margin-top: 1em;"><strong>練習 3：新增 Deny 規則</strong></p>
+        <ul>
+          <li>新增一個 Deny 規則：<code>rm -rf</code></li>
+        </ul>
+        <p style="margin-top: 1em;"><strong>練習 4：測試效果</strong></p>
+        <ul>
+          <li>請 Claude 執行 <code>npm test</code>（應該自動執行）</li>
+          <li>請 Claude 執行 <code>rm -rf temp</code>（應該被拒絕）</li>
+        </ul>
+      </section>
+
+      <!-- ================================
+           本單元重點回顧
+           ================================ -->
+      <section>
+        <h2>本單元重點回顧</h2>
+        <div class="key-point">
+          <h4>核心觀念</h4>
+          <p><strong>1. 三種模式</strong> - Normal（最安全）、Auto-accept（要小心）、Plan（先規劃再執行）</p>
+          <p><strong>2. Plan Mode 使用時機</strong> - 新功能、重構、架構變更、不確定怎麼做時</p>
+          <p><strong>3. Permission 設定</strong> - 一定要設黑名單（禁止危險指令）</p>
+          <p><strong>4. 安全原則</strong> - Claude 能直接操作電腦，權限設定不是選配！</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>安全原則總結</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>原則</th>
+              <th>做法</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>新手階段</strong></td>
+              <td>保持 Normal 模式，看清楚 Claude 在做什麼</td>
+            </tr>
+            <tr>
+              <td><strong>重要專案</strong></td>
+              <td>Normal 模式 + 設定 Deny 規則</td>
+            </tr>
+            <tr>
+              <td><strong>複雜任務</strong></td>
+              <td>用 Plan Mode 先規劃</td>
+            </tr>
+            <tr>
+              <td><strong>日常開發</strong></td>
+              <td>搭配 Git 版本控制</td>
+            </tr>
+            <tr>
+              <td><strong>永遠記住</strong></td>
+              <td>Claude 能真的執行，不只是給建議！</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ================================
+           結尾
+           ================================ -->
+      <section class="section-slide">
+        <h2>單元 3 完成！</h2>
+        <p style="color: var(--text-secondary); font-size: 1.2em;">下一單元：規格驅動開發與驗證</p>
+        <p style="margin-top: 2em;">
+          <a href="單元2_Context工程與專案記憶.html" style="color: var(--accent-green);">← 上一單元</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="index.html" style="color: var(--accent-green);">返回目錄</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="單元4_規格驅動開發與驗證.html" style="color: var(--accent-green);">下一單元 →</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>

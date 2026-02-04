@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>單元 4：規格驅動開發與驗證 - Claude Code 企業培訓</title>
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+
+  <!-- Highlight.js Theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/monokai.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/custom.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ================================
+           封面
+           ================================ -->
+      <section class="title-slide">
+        <div class="section-number">04</div>
+        <h1>規格驅動開發與驗證</h1>
+        <div class="subtitle">Claude Code 企業培訓</div>
+        <div class="meta">60 分鐘</div>
+      </section>
+
+      <!-- ================================
+           本單元大綱
+           ================================ -->
+      <section>
+        <h2>本單元大綱</h2>
+        <ul class="toc-list">
+          <li><span class="section-num">4.1</span> SDD 核心概念</li>
+          <li><span class="section-num">4.2</span> 透過反問釐清需求</li>
+          <li><span class="section-num">4.3</span> 驗證是最重要的事</li>
+          <li><span class="section-num">4.4</span> Superpowers 思維</li>
+          <li><span class="section-num">4.5</span> SDD 完整流程與回顧</li>
+        </ul>
+      </section>
+
+      <!-- ================================
+           4.1 SDD 核心概念
+           ================================ -->
+      <section>
+        <h2>4.1 SDD 核心概念</h2>
+      </section>
+
+      <section>
+        <h2>什麼是 SDD？</h2>
+        <div class="key-point">
+          <h4>SDD = Spec-Driven Development = 規格驅動開發</h4>
+          <p><strong>先把需求講清楚，再讓 AI 幫你寫程式</strong></p>
+        </div>
+        <p style="margin-top: 1em;">用白話說：</p>
+        <ul>
+          <li>不要一開口就叫 Claude 寫程式</li>
+          <li>先把「要什麼」講清楚</li>
+          <li>確認雙方理解一致，再開始動手</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>傳統做法 vs SDD 做法</h2>
+        <div class="comparison-grid">
+          <div class="comparison-card bad">
+            <h4>傳統做法</h4>
+            <p>你：幫我寫一個登入功能</p>
+            <p>Claude：（直接開始寫...）</p>
+            <p>你：不對，我要的不是這樣...</p>
+            <p>Claude：（重寫...）</p>
+            <p>你：還是不對...</p>
+            <p style="color: var(--error-color);">來回修改，浪費時間</p>
+          </div>
+          <div class="comparison-card good">
+            <h4>SDD 做法</h4>
+            <p>你：我要做登入功能，<strong>先別寫，幫我釐清需求</strong></p>
+            <p>Claude：好的，我有幾個問題...</p>
+            <p>你：（一一回答）</p>
+            <p>Claude：了解，我整理一下規格...</p>
+            <p>你：對，就是這樣</p>
+            <p style="color: var(--accent-green);">一次到位！</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>SDD vs TDD vs BDD</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>開發方法</th>
+              <th>核心概念</th>
+              <th>流程</th>
+              <th>適合情境</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>TDD</strong></td>
+              <td>測試先行</td>
+              <td>先寫測試 → 再寫程式</td>
+              <td>品質要求高</td>
+            </tr>
+            <tr>
+              <td><strong>BDD</strong></td>
+              <td>行為描述</td>
+              <td>用「使用者故事」描述功能</td>
+              <td>需求複雜</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-green);">SDD</strong></td>
+              <td>規格描述</td>
+              <td>用自然語言描述需求</td>
+              <td>AI 協作</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>為什麼 SDD 最適合 Claude Code？</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>TDD / BDD 的問題</h4>
+            <p>TDD：要先會寫測試，Claude 不知道你要測什麼</p>
+            <p>BDD：需要特定格式（Given-When-Then），學習成本高</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>SDD 的優勢</h4>
+            <p>用自然語言就好</p>
+            <p>Claude 會幫你問清楚</p>
+            <p>不需要額外格式</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>SDD 三原則（一）：具體描述</h2>
+        <div class="comparison-grid">
+          <div class="comparison-card bad">
+            <h4>不好的描述</h4>
+            <p>「幫我寫一個表單」</p>
+          </div>
+          <div class="comparison-card good">
+            <h4>好的描述</h4>
+            <p>「幫我寫一個註冊表單，包含：</p>
+            <ul style="font-size: 0.9em;">
+              <li>姓名（必填，2-20 字）</li>
+              <li>Email（必填，要驗證格式）</li>
+              <li>密碼（必填，8 位以上，要有大小寫和數字）</li>
+              <li>確認密碼（要和密碼一致）</li>
+              <li>送出後顯示成功訊息」</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>SDD 三原則（二）：分步拆解</h2>
+        <div class="comparison-grid">
+          <div class="comparison-card bad">
+            <h4>不好的做法</h4>
+            <p>「幫我做一個完整的電商網站」</p>
+            <p style="color: var(--error-color);">太大，Claude 不知道從何下手</p>
+          </div>
+          <div class="comparison-card good">
+            <h4>好的做法</h4>
+            <p>「我要做電商網站，我們分步來：</p>
+            <ul style="font-size: 0.9em;">
+              <li>第一步：先做商品列表頁</li>
+              <li>第二步：做商品詳情頁</li>
+              <li>第三步：做購物車</li>
+            </ul>
+            <p style="color: var(--accent-green);">一步一步，確保每步都對</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>SDD 三原則（三）：先探索再執行</h2>
+        <div class="comparison-grid">
+          <div class="comparison-card bad">
+            <h4>不好的做法</h4>
+            <p>直接說「幫我改這個 Bug」</p>
+          </div>
+          <div class="comparison-card good">
+            <h4>好的做法</h4>
+            <p>「這裡有個 Bug，<strong>先別動</strong>，幫我分析一下：</p>
+            <ol style="font-size: 0.9em;">
+              <li>現在的程式碼在做什麼？</li>
+              <li>Bug 的原因可能是什麼？</li>
+              <li>你打算怎麼修？」</li>
+            </ol>
+            <p style="color: var(--accent-green);">先理解現況，再動手</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>核心技巧：讓 Claude 當需求顧問</h2>
+        <div class="key-point">
+          <h4>魔法咒語</h4>
+          <p style="font-size: 1.3em;"><strong>「先不要寫，幫我釐清需求」</strong></p>
+        </div>
+        <p style="margin-top: 1em;">這句話會讓 Claude：</p>
+        <ul>
+          <li>停下來思考</li>
+          <li>列出需要確認的問題</li>
+          <li>等你回答後才開始動手</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>SDD 核心概念小結</h2>
+        <div class="key-point">
+          <h4>記住三件事</h4>
+          <p><strong>1. 具體描述</strong>：說清楚要什麼，不要讓 Claude 猜</p>
+          <p><strong>2. 分步拆解</strong>：大任務切小，一步一步來</p>
+          <p><strong>3. 先探索再執行</strong>：先理解再動手，避免做白工</p>
+        </div>
+      </section>
+
+      <!-- ================================
+           4.2 透過反問釐清需求
+           ================================ -->
+      <section>
+        <h2>4.2 透過反問釐清需求</h2>
+      </section>
+
+      <section>
+        <h2>反問範例：會員登入功能</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">我想加會員登入功能，先不要寫，幫我釐清需求</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              好的，在開始實作之前，我需要確認幾個問題：<br><br>
+              <strong>認證方式</strong><br>
+              Q1: 用什麼方式登入？<br>
+              □ Email + 密碼<br>
+              □ 手機 + 驗證碼<br>
+              □ Google/Facebook 第三方登入
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>反問範例：會員登入功能（續）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              <strong>密碼規則</strong><br>
+              Q2: 密碼有什麼要求？最少幾個字？需要大小寫？<br><br>
+              <strong>登入後行為</strong><br>
+              Q3: 登入成功後跳到哪裡？<br>
+              Q4: 要「記住我」功能嗎？<br><br>
+              <strong>安全機制</strong><br>
+              Q5: 密碼錯誤幾次要鎖定？<br>
+              Q6: 要支援忘記密碼嗎？<br><br>
+              請一一回答，我會根據你的答案規劃實作方案！
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>實戰範例：匯出 Excel 功能</h2>
+        <h3 style="color: var(--error-color);">不好的做法</h3>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">幫我加一個匯出 Excel 功能</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">好的！（直接開始寫...）</div>
+          </div>
+        </div>
+        <div class="warning-box" style="margin-top: 1em;">
+          匯出什麼資料？哪些欄位？要篩選嗎？檔名怎麼取？<br>
+          Claude 自己猜，很可能猜錯！
+        </div>
+      </section>
+
+      <section>
+        <h2>實戰範例：匯出 Excel 功能</h2>
+        <h3 style="color: var(--accent-green);">好的做法</h3>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">我想加匯出 Excel 功能，先幫我釐清需求</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              好的，讓我問清楚：<br><br>
+              <strong>資料來源</strong><br>
+              Q1: 要匯出什麼資料？訂單？會員？報表？<br><br>
+              <strong>欄位選擇</strong><br>
+              Q2: 要匯出哪些欄位？全部或特定？
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>整理規格文件範例</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">訂單列表，全部欄位，可以篩選日期，用 xlsx，檔名用「訂單_日期」，最多 5000 筆，要顯示進度</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              了解！我整理一下規格：<br><br>
+              【匯出 Excel 功能規格】<br>
+              - 資料：訂單列表<br>
+              - 欄位：全部<br>
+              - 篩選：日期範圍<br>
+              - 格式：.xlsx<br>
+              - 檔名：訂單_YYYYMMDD.xlsx<br>
+              - 限制：最多 5000 筆<br>
+              - UX：顯示匯出進度<br><br>
+              <strong>確認無誤就開始實作！</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>結合 Plan Mode 更有效</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">/plan 我想加會員系統</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude [Plan Mode]</div>
+            <div class="content">
+              讓我先問幾個問題來釐清需求...<br><br>
+              [一系列問題]
+            </div>
+          </div>
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">[回答問題]</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              好的，根據你的回答，我規劃以下方案...<br>
+              這個計畫 OK 嗎？
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Plan Mode + SDD 完整流程</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>階段</th>
+              <th>做什麼</th>
+              <th>目的</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Phase 1</strong></td>
+              <td>Claude 問你問題</td>
+              <td>釐清需求</td>
+            </tr>
+            <tr>
+              <td><strong>Phase 2</strong></td>
+              <td>Claude 整理規格</td>
+              <td>確認理解一致</td>
+            </tr>
+            <tr>
+              <td><strong>Phase 3</strong></td>
+              <td>Claude 列出計畫</td>
+              <td>讓你預覽做法</td>
+            </tr>
+            <tr>
+              <td><strong>Phase 4</strong></td>
+              <td>你確認後才執行</td>
+              <td>避免做白工</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip-box">
+          Plan Mode 詳細操作請見單元 3
+        </div>
+      </section>
+
+      <!-- ================================
+           4.3 驗證是最重要的事
+           ================================ -->
+      <section>
+        <h2>4.3 驗證是最重要的事</h2>
+      </section>
+
+      <section>
+        <h2>Boris 的名言</h2>
+        <div class="quote-card">
+          <div class="quote-text">
+            「給 Claude 驗證方式，品質提升 2-3 倍。<br>
+            <strong>這是最重要的事。</strong>」
+          </div>
+          <div class="quote-author">— Boris (Claude Code 專家)</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>沒有驗證的問題</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">幫我寫一個 formatPrice 函式，把數字變成價格格式</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              好的！<br><br>
+              <code>function formatPrice(num) { return '$' + num.toFixed(2); }</code><br><br>
+              完成了！
+            </div>
+          </div>
+        </div>
+        <div class="danger-box" style="margin-top: 1em;">
+          上線後用戶反映：「為什麼 1000 元顯示成 $1000.00 而不是 $1,000.00？」<br>
+          沒有千分位！如果有驗證，馬上就會發現。
+        </div>
+      </section>
+
+      <section>
+        <h2>有驗證的效果</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">
+              幫我寫一個 formatPrice 函式<br><br>
+              <strong>驗證測試：</strong><br>
+              - formatPrice(1234) → "$1,234"<br>
+              - formatPrice(1000000) → "$1,000,000"<br>
+              - formatPrice(99.5) → "$100"（四捨五入）<br>
+              - formatPrice(0) → "$0"<br><br>
+              寫完後跑這些測試，全部通過才算完成
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>有驗證的效果（結果）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              好的！讓我寫並測試...<br><br>
+              <code>function formatPrice(num) { return '$' + Math.round(num).toLocaleString(); }</code><br><br>
+              <strong>測試結果：</strong><br>
+              ✓ formatPrice(1234) → "$1,234"<br>
+              ✓ formatPrice(1000000) → "$1,000,000"<br>
+              ✓ formatPrice(99.5) → "$100"<br>
+              ✓ formatPrice(0) → "$0"<br><br>
+              全部通過！
+            </div>
+          </div>
+        </div>
+        <div class="tip-box">
+          有驗證，Claude 自己會檢查；不對會自己修正；品質保證！
+        </div>
+      </section>
+
+      <section>
+        <h2>核心概念</h2>
+        <div class="key-point">
+          <h4>Claude 需要「標準答案」來自我檢查</h4>
+          <p><strong>沒有驗證</strong> = Claude 不知道做對沒 → 可能產出「看起來對但其實錯」的程式碼</p>
+          <p><strong>有驗證</strong> = Claude 可以自己確認 → 不對會自己修正 → 品質大幅提升</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>不同情境的驗證方式</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>任務類型</th>
+              <th>驗證方式</th>
+              <th>具體範例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>寫程式</strong></td>
+              <td>跑測試</td>
+              <td><code>npm test</code>、寫測試案例</td>
+            </tr>
+            <tr>
+              <td><strong>改 UI</strong></td>
+              <td>截圖</td>
+              <td>改完截圖讓你確認</td>
+            </tr>
+            <tr>
+              <td><strong>寫 API</strong></td>
+              <td>curl 測試</td>
+              <td><code>curl localhost:3000/api/xxx</code></td>
+            </tr>
+            <tr>
+              <td><strong>修 Bug</strong></td>
+              <td>重現→修→驗證</td>
+              <td>確認錯誤消失</td>
+            </tr>
+            <tr>
+              <td><strong>效能優化</strong></td>
+              <td>Benchmark</td>
+              <td>比較前後數據</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>驗證範例 1：寫函式</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">
+              幫我寫一個 validateEmail 函式，驗證 Email 格式<br><br>
+              <strong>驗證測試：</strong><br>
+              - validateEmail("test@example.com") → true<br>
+              - validateEmail("invalid") → false<br>
+              - validateEmail("test@.com") → false<br>
+              - validateEmail("") → false<br><br>
+              測試全過才算完成
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>驗證範例 2：改 UI</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">把登入按鈕改成藍色圓角，<strong>改完截圖讓我看</strong></div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              [修改 CSS]<br>
+              [執行應用程式]<br>
+              [截圖]<br><br>
+              已修改完成，這是截圖：<br>
+              [顯示截圖]<br><br>
+              請確認：按鈕變成藍色了嗎？圓角效果正確嗎？
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>驗證範例 3：修 Bug</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">
+              用戶反映按「送出」沒反應，幫我修<br><br>
+              <strong>驗證步驟：</strong><br>
+              1. 先重現 Bug（按送出確認沒反應）<br>
+              2. 修完後再試一次<br>
+              3. 確認有反應了
+            </div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              重現 Bug：[點擊送出按鈕] 確認：沒有反應 ✓<br>
+              問題原因：onClick handler 裡面有 typo<br>
+              [修正程式碼]<br>
+              驗證修復：[點擊送出按鈕] 結果：表單成功送出 ✓<br>
+              Bug 已修復！
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================
+           4.4 Superpowers 思維
+           ================================ -->
+      <section>
+        <h2>4.4 Superpowers 思維</h2>
+      </section>
+
+      <section>
+        <h2>AI 的問題：太急著動手</h2>
+        <p>你有沒有遇過這種同事？</p>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">幫我做一份報告</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">同事</div>
+            <div class="content">（聽到一半就開始做）<br>做好了！</div>
+          </div>
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">...這不是我要的</div>
+          </div>
+        </div>
+        <div class="warning-box" style="margin-top: 1em;">
+          AI 也有這個問題！很聰明，但缺乏<strong>紀律</strong>——太急著動手，沒有先搞清楚需求。
+        </div>
+      </section>
+
+      <section>
+        <h2>Superpowers 是什麼？</h2>
+        <div class="key-point">
+          <h4>簡單說：給 AI 一本「員工手冊」</h4>
+          <p>就像公司會給新人一本手冊，告訴他：</p>
+          <ul>
+            <li>接到任務先做什麼</li>
+            <li>怎麼確認需求</li>
+            <li>怎麼回報進度</li>
+            <li>什麼事情不能做</li>
+          </ul>
+          <p>Superpowers 就是這樣的手冊，讓 AI 變得更有紀律。</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Superpowers 概念 1：先問清楚再動手</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>沒有 Superpowers 的 AI</h4>
+            <p>你：幫我做一個表單</p>
+            <p>AI：好！（馬上開始寫）...做好了！</p>
+            <p style="color: var(--error-color);">你：我要的不是這種表單...</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>有 Superpowers 的 AI</h4>
+            <p>你：幫我做一個表單</p>
+            <p>AI：好的，在開始之前，讓我確認：<br>1. 這個表單是要收集什麼資料？<br>2. 需要哪些欄位？</p>
+            <p style="color: var(--accent-green);">確認清楚才動手</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Superpowers 概念 2：先寫驗收標準</h2>
+        <p><strong>比喻：裝修房子</strong></p>
+        <div class="comparison-grid">
+          <div class="comparison-card bad">
+            <h4>不好的做法</h4>
+            <p>師傅：「交給我！」（開始裝修）</p>
+            <p>三天後...</p>
+            <p>師傅：「好了！」</p>
+            <p style="color: var(--error-color);">你：「這顏色不對、尺寸不對...」</p>
+          </div>
+          <div class="comparison-card good">
+            <h4>好的做法</h4>
+            <p>師傅：「開始前，我們先確認驗收標準」</p>
+            <ul style="font-size: 0.9em;">
+              <li>牆壁顏色：白色 ✓</li>
+              <li>櫃子尺寸：寬 120cm ✓</li>
+              <li>完成後我會拍照確認 ✓</li>
+            </ul>
+            <p style="color: var(--accent-green);">邊做邊對照標準</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>用在 AI Coding</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">
+              幫我寫一個計算折扣的功能<br><br>
+              <strong>驗收標準：</strong><br>
+              - 原價 1000，打 8 折 → 800<br>
+              - 原價 500，打 9 折 → 450<br>
+              - 原價 0，打任何折 → 0<br>
+              - 折扣超過 100% → 顯示錯誤
+            </div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              了解！我會：<br>
+              1. 先寫這些測試<br>
+              2. 然後寫程式<br>
+              3. 確認所有測試都通過<br><br>
+              這樣你就知道我做對了！
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Superpowers 概念 3：不說「應該」</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>一般 AI 的說法</h4>
+            <p>「這樣<strong style="color: var(--error-color);">應該</strong>可以」</p>
+            <p>「<strong style="color: var(--error-color);">大概</strong>是這樣」</p>
+            <p>「<strong style="color: var(--error-color);">理論上</strong>沒問題」</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>有 Superpowers 的 AI</h4>
+            <p>「<strong style="color: var(--accent-green);">我已經測試過</strong>，結果如下：</p>
+            <p>✓ 測試 1 通過</p>
+            <p>✓ 測試 2 通過</p>
+            <p>全部通過，<strong style="color: var(--accent-green);">確認完成</strong>！」</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Superpowers 概念 4：堵住藉口</h2>
+        <p>AI 很聰明，會找各種理由偷懶。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>AI 的藉口</th>
+              <th>反駁</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>「這個太簡單，不用測試」</td>
+              <td>越簡單越應該測試，證明給我看</td>
+            </tr>
+            <tr>
+              <td>「測試會拖慢速度」</td>
+              <td>不測試出錯重做更慢</td>
+            </tr>
+            <tr>
+              <td>「這個改動很小」</td>
+              <td>小改動也可能有大影響</td>
+            </tr>
+            <tr>
+              <td>「我很確定沒問題」</td>
+              <td>確定就跑測試證明，不確定更要測</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip-box">
+          在 Superpowers Skills 裡，這些藉口都被預先堵住了
+        </div>
+      </section>
+
+      <section>
+        <h2>實際應用：在 CLAUDE.md 加入規則</h2>
+        <pre><code class="language-markdown">## 工作規則
+
+1. 接到任務先釐清需求，一次問一個問題
+2. 開始做之前，先確認「怎麼驗收」
+3. 做完要實際測試，不能說「應該可以」
+4. 有任何不確定的地方，先問我</code></pre>
+        <p style="margin-top: 1em;">這樣每次對話，Claude 都會遵守這些紀律。</p>
+      </section>
+
+      <section>
+        <h2>Superpowers 思維總結</h2>
+        <div class="key-point">
+          <h4>四個核心概念</h4>
+          <p><strong>1. 先問清楚，別急著做</strong> → 一次問一個問題，用選擇題</p>
+          <p><strong>2. 先講好怎麼驗收，再開始做</strong> → 做完要能證明「做對了」</p>
+          <p><strong>3. 不說「應該」，要說「我測試過了」</strong> → 有證據才算數</p>
+          <p><strong>4. 堵住偷懶的藉口</strong> → 不給 AI 繞過規則的機會</p>
+        </div>
+      </section>
+
+      <!-- ================================
+           4.5 SDD 完整流程與回顧
+           ================================ -->
+      <section>
+        <h2>4.5 SDD 完整流程與回顧</h2>
+      </section>
+
+      <section>
+        <h2>SDD 五步驟流程</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>步驟</th>
+              <th>做什麼</th>
+              <th>關鍵動作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Step 1</strong></td>
+              <td>描述需求</td>
+              <td>用自然語言說「我想做 XXX」</td>
+            </tr>
+            <tr>
+              <td><strong>Step 2</strong></td>
+              <td>讓 Claude 反問</td>
+              <td>「先不要寫，幫我釐清需求」</td>
+            </tr>
+            <tr>
+              <td><strong>Step 3</strong></td>
+              <td>確認規格</td>
+              <td>Claude 整理成規格文件，你確認</td>
+            </tr>
+            <tr>
+              <td><strong>Step 4</strong></td>
+              <td>分步執行</td>
+              <td>一步一步做，每步驗收</td>
+            </tr>
+            <tr>
+              <td><strong>Step 5</strong></td>
+              <td>驗證結果</td>
+              <td>執行測試、手動確認</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>完整 Demo：To-Do List（上）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你 [Step 1]</div>
+            <div class="content">我想做一個 To-Do List 功能，先不要寫</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude [Step 2]</div>
+            <div class="content">
+              好的，讓我確認需求：<br><br>
+              <strong>基本功能</strong><br>
+              Q1: 需要哪些操作？新增、完成、刪除、編輯？<br><br>
+              <strong>進階功能</strong><br>
+              Q2: 需要分類嗎？截止日期？優先級？<br><br>
+              <strong>資料儲存</strong><br>
+              Q3: 存哪裡？localStorage？後端資料庫？
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>完整 Demo：To-Do List（中）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">基本的新增、完成、刪除就好<br>不用分類，需要截止日期<br>存 localStorage</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude [Step 3]</div>
+            <div class="content">
+              了解，整理規格如下：<br><br>
+              【To-Do List 規格】<br>
+              - 功能：新增、標記完成、刪除<br>
+              - 欄位：標題、截止日期、完成狀態<br>
+              - 儲存：localStorage<br>
+              - UI：列表顯示，可勾選完成<br><br>
+              確認嗎？
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>完整 Demo：To-Do List（下）</h2>
+        <div class="chat-demo">
+          <div class="chat-msg ai">
+            <div class="sender">Claude [Step 4]</div>
+            <div class="content">
+              好的，我分三步驟完成：<br><br>
+              <strong>Step 1:</strong> 建立資料結構和 localStorage 操作<br>
+              <strong>Step 2:</strong> 建立 UI 元件<br>
+              <strong>Step 3:</strong> 串接功能<br><br>
+              先做 Step 1？
+            </div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude [Step 5]</div>
+            <div class="content">
+              請確認以下功能：<br>
+              ✓ 可以新增待辦<br>
+              ✓ 可以標記完成<br>
+              ✓ 可以刪除<br>
+              ✓ 重新整理頁面資料還在
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>驗證範本整理</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>任務類型</th>
+              <th>範本</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>寫程式</strong></td>
+              <td>「驗證測試：輸入 A → 預期輸出 X」</td>
+            </tr>
+            <tr>
+              <td><strong>改 UI</strong></td>
+              <td>「改完截圖讓我確認」</td>
+            </tr>
+            <tr>
+              <td><strong>修 Bug</strong></td>
+              <td>「先重現 Bug，修完後驗證問題消失」</td>
+            </tr>
+            <tr>
+              <td><strong>寫 API</strong></td>
+              <td>「用 curl 測試，確認回傳正確」</td>
+            </tr>
+            <tr>
+              <td><strong>不知道怎麼驗證</strong></td>
+              <td>「這個功能應該怎麼驗證？」</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>實用咒語整理</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>情境</th>
+              <th>咒語</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>開始新功能</td>
+              <td>「我想做 XXX，<strong>先不要寫，幫我釐清需求</strong>」</td>
+            </tr>
+            <tr>
+              <td>不確定怎麼做</td>
+              <td>「有幾種做法？各有什麼優缺點？」</td>
+            </tr>
+            <tr>
+              <td>要修 Bug</td>
+              <td>「先分析這個 Bug 的原因，再告訴我你打算怎麼修」</td>
+            </tr>
+            <tr>
+              <td>要重構</td>
+              <td>「先看一下現在的程式碼，告訴我有什麼問題」</td>
+            </tr>
+            <tr>
+              <td>確認理解</td>
+              <td>「你理解的需求是什麼？先說一遍讓我確認」</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>本單元重點回顧</h2>
+        <div class="key-point">
+          <h4>核心觀念</h4>
+          <p><strong>1. SDD = 先講清楚需求，再讓 AI 寫</strong></p>
+          <p><strong>2. 魔法咒語：「先不要寫，幫我釐清需求」</strong></p>
+          <p><strong>3. 驗證是最重要的事，品質提升 2-3 倍</strong></p>
+          <p><strong>4. Superpowers 思維：給 AI 紀律，堵住偷懶藉口</strong></p>
+          <p><strong>5. 五步驟流程：描述 → 反問 → 確認 → 執行 → 驗證</strong></p>
+        </div>
+      </section>
+
+      <!-- ================================
+           結尾
+           ================================ -->
+      <section class="section-slide">
+        <h2>單元 4 完成！</h2>
+        <p style="color: var(--text-secondary); font-size: 1.2em;">下一單元：Skills 與 MCP 生態</p>
+        <p style="margin-top: 2em;">
+          <a href="單元3_操作模式與權限管理.html" style="color: var(--accent-green);">← 上一單元</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="index.html" style="color: var(--accent-green);">返回目錄</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="單元5_Skills與MCP.html" style="color: var(--accent-green);">下一單元 →</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>單元 5：Skills 與 MCP 生態 - Claude Code 企業培訓</title>
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+
+  <!-- Highlight.js Theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/monokai.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/custom.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ================================
+           封面
+           ================================ -->
+      <section class="title-slide">
+        <div class="section-number">05</div>
+        <h1>Skills 與 MCP 生態</h1>
+        <div class="subtitle">Claude Code 企業培訓</div>
+        <div class="meta">60 分鐘</div>
+      </section>
+
+      <!-- ================================
+           本單元大綱
+           ================================ -->
+      <section>
+        <h2>本單元大綱</h2>
+        <ul class="toc-list">
+          <li><span class="section-num">5.1</span> 從重複輸入到 Skills</li>
+          <li><span class="section-num">5.2</span> Agent Skills vs Custom Commands</li>
+          <li><span class="section-num">5.3</span> MCP 外部連接能力</li>
+          <li><span class="section-num">5.4</span> Skills vs MCP 選擇指南</li>
+          <li><span class="section-num">5.5</span> Plugin 與回顧</li>
+        </ul>
+      </section>
+
+      <!-- ================================
+           5.1 從重複輸入到 Skills
+           ================================ -->
+      <section>
+        <h2>5.1 從重複輸入到 Skills</h2>
+      </section>
+
+      <section>
+        <h2>沒有 Skill 之前：每次都要複製貼上</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">
+              幫我寫一個表單功能<br><br>
+              工作規則：<br>
+              1. 先用選擇題釐清需求，一次只問一個問題<br>
+              2. 列出驗收標準，我確認後才開始<br>
+              3. 做完要實際測試，不能說「應該可以」<br>
+              4. 如果測試失敗要自己修正
+            </div>
+          </div>
+        </div>
+        <p style="color: var(--error-color); text-align: center; margin-top: 1em;">
+          <strong>每次都要複製貼上這些規則！太累了！</strong>
+        </p>
+      </section>
+
+      <section>
+        <h2>有了 Skill 之後：一個指令搞定</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">/reliable-dev 幫我寫一個表單功能</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              （自動套用規則）<br>
+              好的，讓我先確認需求...<br>
+              [一次問一個問題]<br>
+              ...<br>
+              [確認驗收標準]<br>
+              ...<br>
+              [實際測試並回報結果]
+            </div>
+          </div>
+        </div>
+        <div class="tip-box">
+          一個指令，省去每次重複說明！
+        </div>
+      </section>
+
+      <section>
+        <h2>Skills 定義</h2>
+        <div class="key-point">
+          <h4>Skills = 可重複使用的指令範本</h4>
+          <p>把你常用的規則、流程、格式打包成一個指令</p>
+          <p>以後只要打 <code>/指令名稱</code> 就能套用</p>
+          <p>就像手機的「快捷指令」或 Excel 的「巨集」</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Skills 的價值</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>好處</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>省時間</strong></td>
+              <td>不用每次複製貼上規則</td>
+            </tr>
+            <tr>
+              <td><strong>一致性</strong></td>
+              <td>每次執行都遵守相同規則</td>
+            </tr>
+            <tr>
+              <td><strong>不會忘記</strong></td>
+              <td>規則存在檔案裡，不怕漏掉</td>
+            </tr>
+            <tr>
+              <td><strong>可分享</strong></td>
+              <td>團隊可以共用相同的 Skills</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>兩種 Skill 類型預告</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>Agent Skills</h4>
+            <p>Claude 自己判斷什麼時候該用</p>
+            <p>語意理解，自動觸發</p>
+            <p>存放：<code>.claude/skills/</code></p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>Custom Commands</h4>
+            <p>你決定什麼時候要用</p>
+            <p>打 <code>/指令</code> 明確觸發</p>
+            <p>存放：<code>.claude/commands/</code></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================
+           5.2 Agent Skills vs Custom Commands
+           ================================ -->
+      <section>
+        <h2>5.2 Agent Skills vs Custom Commands</h2>
+      </section>
+
+      <section>
+        <h2>Agent Skills：彈性、智慧判斷</h2>
+        <div class="key-point">
+          <h4>特色</h4>
+          <p>Claude 會根據對話內容，自動判斷：</p>
+          <p>「現在討論的東西，符合哪個 Skill 的 description？」</p>
+          <p>符合的話，就自動啟用那個 Skill 的規則。</p>
+        </div>
+        <p style="margin-top: 1em;"><strong>存放位置：</strong><code>.claude/skills/</code></p>
+      </section>
+
+      <section>
+        <h2>Agent Skills 範例：翻譯專家</h2>
+        <pre><code class="language-markdown"># .claude/skills/translator.md
+---
+name: translator
+description: 當對話涉及翻譯、多語言、在地化時啟用
+---
+
+翻譯規則：
+1. 保持原文的語氣和風格
+2. 專有名詞維持原文，括號附上翻譯
+3. 技術術語使用業界慣用翻譯
+4. 如果不確定，列出多個選項讓使用者選</code></pre>
+      </section>
+
+      <section>
+        <h2>Agent Skills 觸發方式</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">這段英文幫我翻成中文...</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              （語意理解到「翻譯」相關）<br>
+              （自動啟用 translator Skill）<br>
+              （按照 Skill 定義的規則翻譯）
+            </div>
+          </div>
+        </div>
+        <p style="text-align: center; margin-top: 1em;">
+          <strong>你沒有打任何指令，Claude 自己判斷需要這個技能！</strong>
+        </p>
+      </section>
+
+      <section>
+        <h2>Agent Skills 優缺點</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>優點</th>
+              <th>缺點</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>不用記指令，自動觸發</td>
+              <td>Claude 可能判斷錯誤</td>
+            </tr>
+            <tr>
+              <td>更彈性，語意理解</td>
+              <td>執行結果比較不可預測</td>
+            </tr>
+            <tr>
+              <td>適合「領域專業」類型的規則</td>
+              <td>該啟用沒啟用、不該啟用卻啟用</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Custom Commands：穩定、可預測</h2>
+        <div class="key-point">
+          <h4>特色</h4>
+          <p>有時候你不想讓 Claude 自己判斷，</p>
+          <p>你就是要它「現在、立刻、馬上」執行某件事。</p>
+          <p>打 <code>/review</code>，Claude 就執行程式碼審查</p>
+          <p>每次都一樣，不會有意外。</p>
+        </div>
+        <p style="margin-top: 1em;"><strong>存放位置：</strong><code>.claude/commands/</code></p>
+      </section>
+
+      <section>
+        <h2>Custom Commands 範例：/review</h2>
+        <pre><code class="language-markdown"># .claude/commands/review.md
+---
+name: review
+description: 程式碼審查
+---
+
+請審查這段程式碼，檢查：
+1. 邏輯正確性
+2. 安全性
+3. 可讀性
+
+輸出格式：
+- 優點：
+- 問題：
+- 建議：</code></pre>
+      </section>
+
+      <section>
+        <h2>Custom Commands 使用方式</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">/review @src/login.js</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              （不管現在在聊什麼，立刻執行審查）<br>
+              （按照指令定義的格式輸出）<br><br>
+              優點：...<br>
+              問題：...<br>
+              建議：...
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Custom Commands 優缺點</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>優點</th>
+              <th>缺點</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>穩定執行，每次都一樣</td>
+              <td>指令會越來越多，記不住</td>
+            </tr>
+            <tr>
+              <td>你完全控制何時觸發</td>
+              <td>要手動打指令</td>
+            </tr>
+            <tr>
+              <td>不會誤判</td>
+              <td>不會自動啟用</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>核心差異</h2>
+        <div class="key-point">
+          <h4>核心問題：誰決定「何時觸發」？</h4>
+          <p><strong>Agent Skills</strong> = Claude 決定（語意理解）→ 彈性</p>
+          <p><strong>Custom Commands</strong> = 你決定（打 /指令）→ 穩定</p>
+        </div>
+        <pre><code>.claude/
+├── skills/      ← Claude 自動判斷觸發
+│   ├── translator.md
+│   └── react-expert.md
+│
+└── commands/    ← 你手動觸發（/指令）
+    ├── review.md
+    └── explain.md</code></pre>
+      </section>
+
+      <section>
+        <h2>什麼時候用哪個？決策表</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>你的需求</th>
+              <th>選擇</th>
+              <th>原因</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>希望 Claude 聰明判斷</td>
+              <td>Agent Skills</td>
+              <td>彈性、不用記指令</td>
+            </tr>
+            <tr>
+              <td>每次都要一模一樣執行</td>
+              <td>Custom Commands</td>
+              <td>穩定、可預測</td>
+            </tr>
+            <tr>
+              <td>領域專業規則</td>
+              <td>Agent Skills</td>
+              <td>遇到相關話題自動套用</td>
+            </tr>
+            <tr>
+              <td>固定格式的輸出</td>
+              <td>Custom Commands</td>
+              <td>格式一致</td>
+            </tr>
+            <tr>
+              <td>怕 Claude 判斷錯誤</td>
+              <td>Custom Commands</td>
+              <td>你來控制</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>實作：建立 Custom Command</h2>
+        <p><strong>Step 1：建立資料夾</strong></p>
+        <pre><code class="language-bash"># 在專案根目錄建立
+mkdir -p .claude/commands</code></pre>
+        <p><strong>Step 2：建立指令檔案</strong> <code>.claude/commands/explain.md</code></p>
+        <pre><code class="language-markdown">---
+name: explain
+description: 解釋程式碼
+---
+
+請解釋這段程式碼，包含：
+1. 這段程式碼在做什麼（一句話）
+2. 執行流程
+3. 使用範例
+
+用初學者能理解的方式說明。</code></pre>
+        <p><strong>Step 3：使用</strong> <code>/explain @src/utils/helper.js</code></p>
+      </section>
+
+      <section>
+        <h2>實作：建立 Agent Skill</h2>
+        <p><strong>Step 1：建立資料夾</strong></p>
+        <pre><code class="language-bash"># 在專案根目錄建立
+mkdir -p .claude/skills</code></pre>
+        <p><strong>Step 2：建立技能檔案</strong> <code>.claude/skills/react-expert.md</code></p>
+        <pre><code class="language-markdown">---
+name: react-expert
+description: 當對話涉及 React、元件、hooks、狀態管理時啟用
+---
+
+React 開發規則：
+1. 元件使用 Function Component + Hooks
+2. 狀態管理優先用 useState/useReducer
+3. 副作用用 useEffect，注意 cleanup
+4. 命名用 PascalCase</code></pre>
+        <p><strong>Step 3：自動生效</strong> — 當你討論 React 時會自動啟用</p>
+      </section>
+
+      <!-- ================================
+           5.3 MCP 外部連接能力
+           ================================ -->
+      <section>
+        <h2>5.3 MCP 外部連接能力</h2>
+      </section>
+
+      <section>
+        <h2>Skills 的限制</h2>
+        <div class="key-point">
+          <h4>Skills 只能處理「對話」和「檔案」</h4>
+          <p>Skills 做不到：</p>
+          <p>- 連接資料庫查資料</p>
+          <p>- 發 Slack 訊息</p>
+          <p>- 操作瀏覽器</p>
+          <p>- 讀取 Notion 文件</p>
+        </div>
+        <p style="text-align: center; margin-top: 1em;">
+          <strong>這些需要「連接外部系統」的能力。</strong>
+        </p>
+      </section>
+
+      <section>
+        <h2>MCP 是什麼？</h2>
+        <div class="key-point">
+          <h4>MCP = Model Context Protocol = Claude 的外掛系統</h4>
+          <p>MCP 讓 Claude 能連接外部工具</p>
+          <p>就像手機裝 App：</p>
+          <p>- 裝了「銀行 App」→ 手機能查餘額</p>
+          <p>- 裝了「Slack MCP」→ Claude 能發訊息</p>
+          <p>- 裝了「資料庫 MCP」→ Claude 能查資料</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>常見 MCP 列表</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>MCP</th>
+              <th>能做什麼</th>
+              <th>使用場景</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>PostgreSQL</strong></td>
+              <td>查詢資料庫</td>
+              <td>查數據、分析報表</td>
+            </tr>
+            <tr>
+              <td><strong>Slack</strong></td>
+              <td>發送/讀取訊息</td>
+              <td>團隊通知</td>
+            </tr>
+            <tr>
+              <td><strong>Playwright</strong></td>
+              <td>操作瀏覽器</td>
+              <td>網頁測試、截圖</td>
+            </tr>
+            <tr>
+              <td><strong>Context7</strong></td>
+              <td>查最新技術文件</td>
+              <td>查 React/Vue 文件</td>
+            </tr>
+            <tr>
+              <td><strong>Todoist</strong></td>
+              <td>任務管理</td>
+              <td>待辦清單</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>MCP 安裝與使用</h2>
+        <p><strong>安裝：</strong></p>
+        <pre><code class="language-bash">claude mcp add postgres     # 安裝資料庫 MCP
+claude mcp add slack        # 安裝 Slack MCP
+claude mcp list             # 查看已安裝的 MCP</code></pre>
+        <p><strong>使用：</strong>裝好之後，Claude 會自動知道什麼時候該用。</p>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">昨天有多少新用戶？</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              （自動使用 PostgreSQL MCP 查詢）<br><br>
+              昨天新用戶統計：<br>
+              - 總註冊數：156 人<br>
+              - Email 註冊：98 人<br>
+              - Google 登入：42 人
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>MCP 實戰：Context7 查技術文件</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">React 19 的 use() hook 怎麼用？</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              （透過 Context7 MCP 查詢最新文件）<br><br>
+              根據 React 19 官方文件，use() hook 的用法是：<br><br>
+              <code>import { use } from 'react';</code><br><br>
+              use() 可以在 render 時讀取 Promise...
+            </div>
+          </div>
+        </div>
+        <div class="tip-box">
+          Claude 的知識有截止日期，Context7 能查最新版本文件！
+        </div>
+      </section>
+
+      <section>
+        <h2>MCP 實戰：Playwright 操作瀏覽器</h2>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">幫我截一張我們網站首頁的圖</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              （透過 Playwright MCP 操作瀏覽器）<br><br>
+              [開啟瀏覽器]<br>
+              [導航到 https://yoursite.com]<br>
+              [截圖]<br><br>
+              已儲存截圖到 homepage.png
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================
+           5.4 Skills vs MCP 選擇指南
+           ================================ -->
+      <section>
+        <h2>5.4 Skills vs MCP 選擇指南</h2>
+      </section>
+
+      <section>
+        <h2>兩者的差別</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>Skills 像「食譜」</h4>
+            <p>告訴廚師做菜的步驟</p>
+            <p>定義「怎麼做」</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>MCP 像「廚房設備」</h4>
+            <p>烤箱、冰箱、攪拌機</p>
+            <p>提供「能做什麼」</p>
+          </div>
+        </div>
+        <div class="key-point" style="margin-top: 1em;">
+          <h4>兩者可以搭配使用</h4>
+          <p>用「食譜」（Skill）指導，用「設備」（MCP）執行</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>MCP 優點</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>優點</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>認證安全</strong></td>
+              <td>密碼、Token 由 MCP Server 持有，不會出現在對話裡</td>
+            </tr>
+            <tr>
+              <td><strong>能力封裝</strong></td>
+              <td>可以限制只能做特定操作（如：只能查詢、不能刪除）</td>
+            </tr>
+            <tr>
+              <td><strong>狀態持久</strong></td>
+              <td>保持連線（如：瀏覽器不用每次重開）</td>
+            </tr>
+            <tr>
+              <td><strong>裝好就用</strong></td>
+              <td>別人寫好的，不用自己寫程式</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>MCP 缺點</h2>
+        <div class="warning-box">
+          每個 MCP 的工具描述都會佔 Context 空間！裝太多會擠壓對話空間。
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>缺點</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color: var(--error-color);">佔用 Context</strong></td>
+              <td>每個 MCP 都會佔用 Context 空間</td>
+            </tr>
+            <tr>
+              <td><strong>需要持續運行</strong></td>
+              <td>MCP Server 要一直跑著，佔系統資源</td>
+            </tr>
+            <tr>
+              <td><strong>設定麻煩</strong></td>
+              <td>有些 MCP 需要設定 API Key、OAuth 等</td>
+            </tr>
+            <tr>
+              <td><strong>功能受限</strong></td>
+              <td>只能用 MCP 提供的功能</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Skill + Python 優點</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>優點</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>超級彈性</strong></td>
+              <td>想做什麼都可以，不受 MCP 功能限制</td>
+            </tr>
+            <tr>
+              <td><strong>不佔 Context</strong></td>
+              <td>不會像 MCP 一直佔著空間</td>
+            </tr>
+            <tr>
+              <td><strong>不需要額外設定</strong></td>
+              <td>有 Python 就能跑</td>
+            </tr>
+            <tr>
+              <td><strong>一次性任務友好</strong></td>
+              <td>用完就刪，不留痕跡</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Skill + Python 缺點</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>缺點</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>認證風險</strong></td>
+              <td>密碼可能出現在腳本裡，或要自己管環境變數</td>
+            </tr>
+            <tr>
+              <td><strong>要會 Python</strong></td>
+              <td>如果你不熟 Python，可能看不懂 Claude 寫的腳本</td>
+            </tr>
+            <tr>
+              <td><strong>沒有能力限制</strong></td>
+              <td>Python 什麼都能做，也可能做錯事</td>
+            </tr>
+            <tr>
+              <td><strong>每次重來</strong></td>
+              <td>沒有狀態持久，每次都要重新連線</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>全面比較表</h2>
+        <table style="font-size: 0.9em;">
+          <thead>
+            <tr>
+              <th>考量面向</th>
+              <th>MCP</th>
+              <th>Skill + Python</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>認證安全</td>
+              <td style="color: var(--accent-green);">更安全</td>
+              <td style="color: var(--warning-color);">要自己管理</td>
+            </tr>
+            <tr>
+              <td>Context 佔用</td>
+              <td style="color: var(--error-color);">會一直佔用</td>
+              <td style="color: var(--accent-green);">不佔用</td>
+            </tr>
+            <tr>
+              <td>彈性</td>
+              <td style="color: var(--warning-color);">受限於 MCP 功能</td>
+              <td style="color: var(--accent-green);">想做什麼都行</td>
+            </tr>
+            <tr>
+              <td>上手難度</td>
+              <td style="color: var(--accent-green);">裝好就用</td>
+              <td style="color: var(--warning-color);">要會 Python</td>
+            </tr>
+            <tr>
+              <td>穩定性</td>
+              <td style="color: var(--warning-color);">Server 可能掛</td>
+              <td style="color: var(--accent-green);">只依賴 Python</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>決策流程</h2>
+        <div class="key-point">
+          <h4>該用 MCP 還是 Skill + Python？</h4>
+          <p><strong>1. 這個任務涉及密碼、Token 嗎？</strong></p>
+          <p style="padding-left: 1.5em;">→ 是：優先考慮 MCP（更安全）</p>
+          <p><strong>2. 這是經常要做的事，還是一次性的？</strong></p>
+          <p style="padding-left: 1.5em;">→ 經常做：考慮 MCP（方便）</p>
+          <p style="padding-left: 1.5em;">→ 一次性：Skill + Python（不佔 Context）</p>
+          <p><strong>3. 有現成的 MCP 嗎？</strong></p>
+          <p style="padding-left: 1.5em;">→ 有：用 MCP（省事）</p>
+          <p style="padding-left: 1.5em;">→ 沒有：Skill + Python（自己寫）</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>整合範例：Skill + MCP</h2>
+        <pre><code class="language-markdown"># .claude/commands/daily-report.md
+---
+name: daily-report
+description: 每日報表
+---
+
+請執行以下步驟：
+
+1. 用資料庫 MCP 查詢昨日數據：
+   - 新用戶數
+   - 訂單數
+   - 營收
+
+2. 整理成報表格式
+
+3. 用 Slack MCP 發送到 #daily-report 頻道</code></pre>
+        <p style="text-align: center; margin-top: 1em;">
+          <strong>Skill 定義流程，MCP 負責執行！</strong>
+        </p>
+      </section>
+
+      <!-- ================================
+           5.5 Plugin 與回顧
+           ================================ -->
+      <section>
+        <h2>5.5 Plugin 與回顧</h2>
+      </section>
+
+      <section>
+        <h2>什麼是 Plugin？</h2>
+        <div class="key-point">
+          <h4>Plugin = 社群開發的 MCP 擴充</h4>
+          <p>MCP 是技術規格（像 USB 標準）</p>
+          <p>Plugin 是基於 MCP 做出來的實際工具（像各種 USB 裝置）</p>
+        </div>
+        <div class="vs-container" style="margin-top: 1em;">
+          <div class="vs-card left">
+            <h4>MCP = 插座標準</h4>
+            <p>定義規格</p>
+          </div>
+          <div class="vs-divider">=</div>
+          <div class="vs-card right">
+            <h4>Plugin = 各種電器</h4>
+            <p>別人做好的，插上就能用</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>推薦 Plugin</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Plugin</th>
+              <th>功能</th>
+              <th>使用場景</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Context7</strong></td>
+              <td>查最新技術文件</td>
+              <td>查 React/Vue/Node 最新語法</td>
+            </tr>
+            <tr>
+              <td><strong>Playwright</strong></td>
+              <td>操作瀏覽器</td>
+              <td>截圖、爬資料、測試</td>
+            </tr>
+            <tr>
+              <td><strong>PostgreSQL</strong></td>
+              <td>查詢資料庫</td>
+              <td>分析數據、產生報表</td>
+            </tr>
+            <tr>
+              <td><strong>Todoist</strong></td>
+              <td>任務管理</td>
+              <td>GTD 系統整合</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Plugin 安裝指令</h2>
+        <pre><code class="language-bash"># 安裝 Plugin
+claude mcp add context7
+claude mcp add playwright
+claude mcp add postgres
+
+# 查看已安裝的 Plugin
+claude mcp list
+
+# 移除 Plugin
+claude mcp remove context7</code></pre>
+        <div class="warning-box">
+          記得：只裝你真正會用到的 Plugin，不要貪多，以免佔用過多 Context！
+        </div>
+      </section>
+
+      <section>
+        <h2>推薦 Skills</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Skill</th>
+              <th>功能</th>
+              <th>適合誰</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ui-ux-pro-max</strong></td>
+              <td>專業 UI/UX 設計</td>
+              <td>設計師、全端開發</td>
+            </tr>
+            <tr>
+              <td><strong>frontend-design</strong></td>
+              <td>前端設計產生</td>
+              <td>前端開發者</td>
+            </tr>
+            <tr>
+              <td><strong>code-simplifier</strong></td>
+              <td>簡化複雜程式碼</td>
+              <td>所有開發者</td>
+            </tr>
+            <tr>
+              <td><strong>code-review</strong></td>
+              <td>程式碼審查</td>
+              <td>所有開發者</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip-box">
+          ui-ux-pro-max 支援 50 種設計風格、21 種配色方案！
+        </div>
+      </section>
+
+      <section>
+        <h2>本單元重點回顧</h2>
+        <div class="key-point">
+          <h4>四大重點</h4>
+          <p><strong>1. Skills = 打包好的規則</strong></p>
+          <p style="padding-left: 1.5em;">把常用的流程、格式存成指令</p>
+          <p><strong>2. Agent Skills vs Custom Commands</strong></p>
+          <p style="padding-left: 1.5em;">Claude 自動判斷 vs 你手動觸發</p>
+          <p><strong>3. MCP = 外部連接能力</strong></p>
+          <p style="padding-left: 1.5em;">讓 Claude 能連資料庫、發 Slack</p>
+          <p><strong>4. Skills vs MCP</strong></p>
+          <p style="padding-left: 1.5em;">Skills = 食譜（怎麼做），MCP = 設備（能做什麼）</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Skills vs MCP 選擇總結</h2>
+        <div class="key-point">
+          <h4>選擇指南（簡化版）</h4>
+          <p><strong>涉及密碼、經常用</strong> → MCP</p>
+          <p><strong>一次性、要超級彈性</strong> → Skill + Python</p>
+          <p><strong>Context 很緊張</strong> → 少用 MCP，多用 Skill + Python</p>
+          <p><strong>兩者結合</strong> → Skill 定義流程，呼叫 MCP 執行</p>
+        </div>
+      </section>
+
+      <!-- ================================
+           結尾
+           ================================ -->
+      <section class="section-slide">
+        <h2>單元 5 完成！</h2>
+        <p style="color: var(--text-secondary); font-size: 1.2em;">下一單元：綜合實作</p>
+        <p style="margin-top: 2em;">
+          <a href="單元4_規格驅動開發與驗證.html" style="color: var(--accent-green);">← 上一單元</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="index.html" style="color: var(--accent-green);">返回目錄</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="單元6_綜合實作.html" style="color: var(--accent-green);">下一單元 →</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code 企業培訓 3.0</title>
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+
+  <!-- Highlight.js Theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/monokai.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/custom.css">
+
+  <style>
+    /* 目錄頁專用樣式 */
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.8em;
+      margin-top: 1.5em;
+    }
+
+    .unit-card {
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5em 2em;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.25s ease;
+      display: block;
+    }
+
+    .unit-card:hover {
+      border-color: var(--accent-green);
+      background: var(--bg-tertiary);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(34, 197, 94, 0.2);
+    }
+
+    .unit-card .unit-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+      color: var(--accent-green);
+      margin-bottom: 0.4em;
+      font-weight: 700;
+    }
+
+    .unit-card .unit-title {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin-bottom: 0.4em;
+    }
+
+    .unit-card .unit-meta {
+      font-size: 0.85em;
+      color: var(--text-muted);
+    }
+
+    .shortcut-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2em;
+      margin-top: 1.2em;
+      font-size: 0.85em;
+    }
+
+    .shortcut-item {
+      background: var(--bg-secondary);
+      padding: 1em;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
+
+    .shortcut-item kbd {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-tertiary);
+      padding: 0.3em 0.6em;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      color: var(--accent-green);
+      font-size: 1em;
+    }
+
+    .shortcut-item span {
+      display: block;
+      margin-top: 0.5em;
+      color: var(--text-secondary);
+    }
+
+    .logo-section {
+      margin-bottom: 1.2em;
+    }
+
+    .logo-section svg {
+      width: 100px;
+      height: 100px;
+    }
+
+    .total-time {
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent-green);
+      border-radius: 12px;
+      padding: 1em 2em;
+      display: inline-block;
+      margin-top: 1em;
+      font-size: 1.1em;
+    }
+
+    .total-time strong {
+      color: var(--accent-green);
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 封面頁 -->
+      <section class="title-slide">
+        <div class="logo-section">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" rx="20" fill="#1E293B"/>
+            <path d="M30 70V30h10l15 25V30h10v40H55L40 45v25H30z" fill="#22C55E"/>
+            <circle cx="75" cy="35" r="5" fill="#22C55E"/>
+          </svg>
+        </div>
+        <h1>Claude Code 企業培訓</h1>
+        <div class="subtitle">從零開始掌握 AI Coding 核心能力</div>
+        <div class="meta">版本 3.0 | 2026</div>
+      </section>
+
+      <!-- 課程總覽 -->
+      <section>
+        <h2>課程單元</h2>
+        <div class="index-grid">
+          <a href="單元1_核心概念與操作.html" class="unit-card">
+            <div class="unit-number">UNIT 01</div>
+            <div class="unit-title">核心概念與基本操作</div>
+            <div class="unit-meta">60 分鐘 | 終端機概念、VSCode 操作、專案管理</div>
+          </a>
+          <a href="單元2_Context工程與專案記憶.html" class="unit-card">
+            <div class="unit-number">UNIT 02</div>
+            <div class="unit-title">Context 工程與專案記憶</div>
+            <div class="unit-meta">45 分鐘 | CLAUDE.md、Context 管理</div>
+          </a>
+          <a href="單元3_操作模式與權限管理.html" class="unit-card">
+            <div class="unit-number">UNIT 03</div>
+            <div class="unit-title">操作模式與權限管理</div>
+            <div class="unit-meta">45 分鐘 | 三種模式、Permission 設定</div>
+          </a>
+          <a href="單元4_規格驅動開發與驗證.html" class="unit-card">
+            <div class="unit-number">UNIT 04</div>
+            <div class="unit-title">規格驅動開發與驗證</div>
+            <div class="unit-meta">60 分鐘 | SDD、驗收標準、Superpowers</div>
+          </a>
+          <a href="單元5_Skills與MCP.html" class="unit-card">
+            <div class="unit-number">UNIT 05</div>
+            <div class="unit-title">Skills 與 MCP 生態</div>
+            <div class="unit-meta">60 分鐘 | Agent Skills、MCP、Plugin</div>
+          </a>
+          <a href="單元6_綜合實作.html" class="unit-card">
+            <div class="unit-number">UNIT 06</div>
+            <div class="unit-title">綜合實作</div>
+            <div class="unit-meta">45 分鐘 | 完整專案實戰、總複習</div>
+          </a>
+        </div>
+        <div class="total-time">
+          <strong>總時長：5 小時 15 分鐘</strong>（含休息約 6 小時）
+        </div>
+      </section>
+
+      <!-- 快捷鍵說明 -->
+      <section>
+        <h2>簡報操作指南</h2>
+        <div class="shortcut-grid">
+          <div class="shortcut-item">
+            <kbd>→</kbd> / <kbd>Space</kbd>
+            <span>下一頁</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>←</kbd>
+            <span>上一頁</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>O</kbd>
+            <span>總覽模式</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>F</kbd>
+            <span>全螢幕</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>S</kbd>
+            <span>講者備註</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>?</kbd>
+            <span>快捷鍵列表</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>Home</kbd>
+            <span>第一頁</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>End</kbd>
+            <span>最後一頁</span>
+          </div>
+        </div>
+        <blockquote style="margin-top: 1.8em;">
+          <p><strong>匯出 PDF：</strong>按 <kbd>Ctrl</kbd>+<kbd>P</kbd>，選擇「另存為 PDF」</p>
+        </blockquote>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>

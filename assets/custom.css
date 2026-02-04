@@ -1,0 +1,608 @@
+/**
+ * Claude Code 企業培訓 - Reveal.js 自訂樣式
+ * 設計系統：Developer Dark Theme（ui-ux-pro-max）
+ * v2.0 - 修正版：更大字體、移除 ASCII 框
+ */
+
+/* ============================================
+   色彩變數
+   ============================================ */
+:root {
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E293B;
+  --bg-tertiary: #334155;
+  --accent-green: #22C55E;
+  --accent-green-hover: #16A34A;
+  --accent-blue: #3B82F6;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-color: #475569;
+  --code-bg: #1E293B;
+  --warning-color: #F59E0B;
+  --error-color: #EF4444;
+}
+
+/* ============================================
+   Reveal.js 基礎覆寫
+   ============================================ */
+.reveal {
+  font-family: 'IBM Plex Sans', 'Noto Sans TC', sans-serif;
+  font-size: 36px;
+  color: var(--text-primary);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides section {
+  padding: 50px 80px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* ============================================
+   標題樣式
+   ============================================ */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+  font-family: 'JetBrains Mono', 'Noto Sans TC', monospace;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: none;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.8em;
+}
+
+.reveal h1 {
+  font-size: 2.4em;
+  border-bottom: 4px solid var(--accent-green);
+  padding-bottom: 0.3em;
+}
+
+.reveal h2 {
+  font-size: 1.8em;
+  color: var(--accent-green);
+}
+
+.reveal h3 {
+  font-size: 1.4em;
+  color: var(--text-secondary);
+}
+
+.reveal h4 {
+  font-size: 1.2em;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   段落與文字
+   ============================================ */
+.reveal p {
+  font-size: 1.1em;
+  line-height: 1.7;
+  margin-bottom: 0.8em;
+}
+
+.reveal strong {
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
+.reveal em {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* 大字強調 */
+.reveal .big-text {
+  font-size: 1.4em;
+  line-height: 1.6;
+}
+
+/* ============================================
+   列表樣式（目錄專用 - 無數字）
+   ============================================ */
+.reveal ul,
+.reveal ol {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+.reveal li {
+  font-size: 1.1em;
+  line-height: 2;
+  margin-bottom: 0.3em;
+}
+
+.reveal ul li::marker {
+  color: var(--accent-green);
+}
+
+.reveal ol li::marker {
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
+/* 目錄列表（無序號） */
+.toc-list {
+  list-style: none !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.toc-list li {
+  font-size: 1.2em;
+  padding: 0.5em 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.toc-list li:last-child {
+  border-bottom: none;
+}
+
+.toc-list .section-num {
+  color: var(--accent-green);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  margin-right: 0.5em;
+}
+
+/* ============================================
+   程式碼區塊樣式（放大版）
+   ============================================ */
+.reveal pre {
+  width: 100%;
+  margin: 1em 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  border: 2px solid var(--border-color);
+}
+
+.reveal pre code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.15em;
+  line-height: 1.7;
+  padding: 1.5em 2em;
+  max-height: 600px;
+  border-radius: 14px;
+}
+
+/* 行內程式碼 */
+.reveal code:not(pre code) {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
+  background: var(--bg-secondary);
+  color: var(--accent-green);
+  padding: 0.2em 0.5em;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+/* ============================================
+   表格樣式（放大版）
+   ============================================ */
+.reveal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 1em;
+}
+
+.reveal table th {
+  background: var(--bg-secondary);
+  color: var(--accent-green);
+  font-weight: 600;
+  font-size: 1.05em;
+  padding: 1em 1.2em;
+  text-align: left;
+  border-bottom: 3px solid var(--accent-green);
+}
+
+.reveal table td {
+  padding: 0.9em 1.2em;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: top;
+}
+
+.reveal table tr:hover td {
+  background: rgba(34, 197, 94, 0.08);
+}
+
+/* ============================================
+   引用區塊
+   ============================================ */
+.reveal blockquote {
+  background: var(--bg-secondary);
+  border-left: 5px solid var(--accent-green);
+  padding: 1.2em 1.8em;
+  margin: 1em 0;
+  border-radius: 0 12px 12px 0;
+  font-style: normal;
+  font-size: 1.1em;
+}
+
+.reveal blockquote p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   重點卡片（取代 ASCII 框）
+   ============================================ */
+.key-point {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border: 2px solid var(--accent-green);
+  border-radius: 16px;
+  padding: 1.5em 2em;
+  margin: 1.2em 0;
+  position: relative;
+}
+
+.key-point::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--accent-green);
+  border-radius: 14px 14px 0 0;
+}
+
+.key-point h4 {
+  color: var(--accent-green);
+  margin-top: 0;
+  margin-bottom: 0.8em;
+  font-size: 1.2em;
+}
+
+.key-point p {
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+}
+
+.key-point p:last-child {
+  margin-bottom: 0;
+}
+
+/* 名言卡片 */
+.quote-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--accent-blue);
+  border-radius: 16px;
+  padding: 2em;
+  margin: 1.5em 0;
+  text-align: center;
+}
+
+.quote-card .quote-text {
+  font-size: 1.4em;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 1em;
+  line-height: 1.5;
+}
+
+.quote-card .quote-author {
+  font-size: 1em;
+  color: var(--text-muted);
+}
+
+/* ============================================
+   對比卡片（取代 ASCII 對比框）
+   ============================================ */
+.vs-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5em;
+  align-items: stretch;
+  margin: 1.5em 0;
+}
+
+.vs-card {
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  padding: 1.5em;
+  border: 2px solid var(--border-color);
+}
+
+.vs-card.left {
+  border-color: var(--text-muted);
+}
+
+.vs-card.right {
+  border-color: var(--accent-green);
+}
+
+.vs-card h4 {
+  margin-top: 0;
+  font-size: 1.15em;
+}
+
+.vs-card.left h4 {
+  color: var(--text-muted);
+}
+
+.vs-card.right h4 {
+  color: var(--accent-green);
+}
+
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* ============================================
+   警告與提示框
+   ============================================ */
+.warning-box {
+  background: rgba(245, 158, 11, 0.15);
+  border: 2px solid var(--warning-color);
+  border-radius: 12px;
+  padding: 1.2em 1.8em;
+  margin: 1em 0;
+  font-size: 1.05em;
+}
+
+.warning-box::before {
+  content: "⚠️ 注意：";
+  font-weight: 600;
+  color: var(--warning-color);
+}
+
+.danger-box {
+  background: rgba(239, 68, 68, 0.15);
+  border: 2px solid var(--error-color);
+  border-radius: 12px;
+  padding: 1.2em 1.8em;
+  margin: 1em 0;
+  font-size: 1.05em;
+}
+
+.danger-box::before {
+  content: "🚨 危險：";
+  font-weight: 600;
+  color: var(--error-color);
+}
+
+.tip-box {
+  background: rgba(34, 197, 94, 0.15);
+  border: 2px solid var(--accent-green);
+  border-radius: 12px;
+  padding: 1.2em 1.8em;
+  margin: 1em 0;
+  font-size: 1.05em;
+}
+
+.tip-box::before {
+  content: "💡 提示：";
+  font-weight: 600;
+  color: var(--accent-green);
+}
+
+/* ============================================
+   封面頁樣式
+   ============================================ */
+.title-slide {
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-slide h1 {
+  font-size: 2.8em;
+  border-bottom: none;
+  margin-bottom: 0.5em;
+}
+
+.title-slide .subtitle {
+  font-size: 1.5em;
+  color: var(--text-secondary);
+  margin-bottom: 1.5em;
+}
+
+.title-slide .meta {
+  font-size: 1em;
+  color: var(--text-muted);
+}
+
+/* ============================================
+   章節標題頁
+   ============================================ */
+.section-slide {
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-slide h2 {
+  font-size: 2.2em;
+  color: var(--text-primary);
+}
+
+.section-slide .section-number {
+  font-size: 4em;
+  color: var(--accent-green);
+  font-weight: 700;
+  margin-bottom: 0.2em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ============================================
+   比較表格（左右對比）
+   ============================================ */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  margin: 1em 0;
+}
+
+.comparison-card {
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  padding: 1.5em;
+  border: 2px solid var(--border-color);
+}
+
+.comparison-card.good {
+  border-color: var(--accent-green);
+}
+
+.comparison-card.good h4 {
+  color: var(--accent-green);
+}
+
+.comparison-card.bad {
+  border-color: var(--error-color);
+}
+
+.comparison-card.bad h4 {
+  color: var(--error-color);
+}
+
+.comparison-card h4 {
+  margin-top: 0;
+  font-size: 1.15em;
+}
+
+/* ============================================
+   對話示意（取代純文字對話）
+   ============================================ */
+.chat-demo {
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  padding: 1.5em;
+  margin: 1em 0;
+}
+
+.chat-msg {
+  margin-bottom: 1em;
+  padding: 0.8em 1.2em;
+  border-radius: 12px;
+}
+
+.chat-msg:last-child {
+  margin-bottom: 0;
+}
+
+.chat-msg.user {
+  background: var(--bg-tertiary);
+  margin-left: 2em;
+}
+
+.chat-msg.ai {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid var(--accent-green);
+  margin-right: 2em;
+}
+
+.chat-msg .sender {
+  font-weight: 600;
+  font-size: 0.85em;
+  margin-bottom: 0.3em;
+}
+
+.chat-msg.user .sender {
+  color: var(--text-muted);
+}
+
+.chat-msg.ai .sender {
+  color: var(--accent-green);
+}
+
+.chat-msg .content {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+/* ============================================
+   進度指示器
+   ============================================ */
+.reveal .progress {
+  height: 5px;
+  background: var(--bg-tertiary);
+}
+
+.reveal .progress span {
+  background: var(--accent-green);
+}
+
+/* ============================================
+   頁碼樣式
+   ============================================ */
+.reveal .slide-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  color: var(--text-muted);
+  background: transparent;
+  right: 30px;
+  bottom: 30px;
+}
+
+/* ============================================
+   動畫效果
+   ============================================ */
+.reveal .slides section .fragment {
+  transition: all 0.25s ease;
+}
+
+.reveal .slides section .fragment.fade-in {
+  opacity: 0;
+}
+
+.reveal .slides section .fragment.fade-in.visible {
+  opacity: 1;
+}
+
+/* ============================================
+   響應式調整
+   ============================================ */
+@media (max-width: 1400px) {
+  .reveal {
+    font-size: 32px;
+  }
+
+  .reveal pre code {
+    font-size: 0.95em;
+  }
+}
+
+@media (max-width: 1000px) {
+  .reveal {
+    font-size: 28px;
+  }
+
+  .reveal .slides section {
+    padding: 40px 50px;
+  }
+}
+
+/* ============================================
+   列印/PDF 匯出樣式
+   ============================================ */
+@media print {
+  .reveal {
+    font-size: 20pt;
+  }
+
+  .reveal .slides section {
+    page-break-after: always;
+  }
+
+  .reveal pre code {
+    max-height: none;
+  }
+}

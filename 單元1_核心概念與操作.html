@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>單元 1：核心概念與基本操作 - Claude Code 企業培訓</title>
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+
+  <!-- Highlight.js Theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/monokai.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/custom.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ================================
+           封面
+           ================================ -->
+      <section class="title-slide">
+        <div class="section-number">01</div>
+        <h1>核心概念與基本操作</h1>
+        <div class="subtitle">Claude Code 企業培訓</div>
+        <div class="meta">60 分鐘</div>
+      </section>
+
+      <!-- ================================
+           本單元大綱
+           ================================ -->
+      <section>
+        <h2>本單元大綱</h2>
+        <ul class="toc-list">
+          <li><span class="section-num">1.1</span> 什麼是終端機？</li>
+          <li><span class="section-num">1.2</span> ChatGPT/Claude 網頁版 vs Claude Code</li>
+          <li><span class="section-num">1.3</span> AI Coding 的價值</li>
+          <li><span class="section-num">1.4</span> VSCode 操作完整教學</li>
+          <li><span class="section-num">1.5</span> CLI 版簡介</li>
+          <li><span class="section-num">1.6</span> 專案管理原則</li>
+        </ul>
+      </section>
+
+      <!-- ================================
+           1.1 什麼是終端機
+           ================================ -->
+      <section>
+        <h2>1.1 什麼是終端機？</h2>
+      </section>
+
+      <section>
+        <h2>終端機 = 那個黑底白字的視窗</h2>
+        <p class="big-text">你可能聽過這些名詞：</p>
+        <p class="big-text"><strong>終端機</strong>、<strong>Terminal</strong>、<strong>命令列</strong>、<strong>CLI</strong>、<strong>Command Line</strong></p>
+        <p class="big-text" style="margin-top: 1em;">它們都是同一個東西：<br>
+        <strong>你打一行指令，電腦就執行一件事</strong></p>
+      </section>
+
+      <section>
+        <h2>常見指令範例</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>你打的指令</th>
+              <th>電腦做的事</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>dir</code></td>
+              <td>列出資料夾裡的檔案</td>
+            </tr>
+            <tr>
+              <td><code>mkdir photos</code></td>
+              <td>建立一個叫 photos 的資料夾</td>
+            </tr>
+            <tr>
+              <td><code>del temp.txt</code></td>
+              <td>刪除 temp.txt 這個檔案</td>
+            </tr>
+            <tr>
+              <td><code>code .</code></td>
+              <td>打開 VS Code</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>為什麼要知道這個？</h2>
+        <div class="key-point">
+          <h4>關鍵概念</h4>
+          <p><strong>Claude Code 就是能在終端機下指令的 AI</strong></p>
+          <p>這代表它<strong>真的能對你的電腦做事</strong></p>
+          <p>不只是給建議，而是<strong>真的會執行</strong></p>
+        </div>
+      </section>
+
+      <!-- ================================
+           1.2 網頁版 vs Claude Code
+           ================================ -->
+      <section>
+        <h2>1.2 ChatGPT/Claude 網頁版 vs Claude Code</h2>
+      </section>
+
+      <section>
+        <h2>情境 1：寫程式並執行</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>ChatGPT / Claude 網頁版</h4>
+            <p>給你程式碼</p>
+            <p>你要自己：複製 → 貼上 → 存檔 → 開終端機 → 執行</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>Claude Code</h4>
+            <p>直接幫你寫好、存檔、執行</p>
+            <p>你只要看結果</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>情境 2：打開檔案</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>ChatGPT / Claude 網頁版</h4>
+            <p>「你可以用這個指令打開：<code>code config.js</code>」</p>
+            <p>AI 只是告訴你怎麼做</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>Claude Code</h4>
+            <p>直接執行 <code>code config.js</code></p>
+            <p>檔案真的被打開了</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>情境 3：整理資料夾</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>ChatGPT / Claude 網頁版</h4>
+            <p>給你一堆 move 指令</p>
+            <p>你要自己去執行</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>Claude Code</h4>
+            <p>直接幫你搬完</p>
+            <p>「已移動 25 個圖片檔案」</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>情境 4：危險操作！</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>ChatGPT / Claude 網頁版</h4>
+            <p>「⚠️ 這是危險操作...」</p>
+            <p>只會警告你，不會真的執行</p>
+            <p>你的 D 槽還在</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>Claude Code</h4>
+            <p><strong style="color: var(--error-color);">真的刪了！D 槽清空了！</strong></p>
+            <p>這就是為什麼「權限管理」很重要</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>總結對比</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>你想做的事</th>
+              <th>網頁版</th>
+              <th>Claude Code</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>寫程式並執行</td>
+              <td>給程式碼，你自己存檔執行</td>
+              <td>直接寫好、存檔、執行</td>
+            </tr>
+            <tr>
+              <td>打開檔案</td>
+              <td>告訴你指令</td>
+              <td>直接打開</td>
+            </tr>
+            <tr>
+              <td>整理資料夾</td>
+              <td>給你指令</td>
+              <td>直接幫你搬</td>
+            </tr>
+            <tr>
+              <td>危險操作</td>
+              <td>警告、不執行</td>
+              <td><strong style="color: var(--error-color);">真的執行！</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>白話總結</h2>
+        <div class="vs-container">
+          <div class="vs-card left">
+            <h4>網頁版 = 顧問</h4>
+            <p>出一張嘴，給建議</p>
+            <p>但不動手</p>
+            <p>你還是要自己去執行</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card right">
+            <h4>Claude Code = 工人</h4>
+            <p>你說什麼，它就做什麼</p>
+            <p>真的會改你的檔案</p>
+            <p>執行指令、操作電腦</p>
+          </div>
+        </div>
+        <div class="warning-box" style="margin-top: 1em;">
+          這就是為什麼後面要講「權限管理」！
+        </div>
+      </section>
+
+      <!-- ================================
+           1.3 AI Coding 的價值
+           ================================ -->
+      <section>
+        <h2>1.3 AI Coding 的價值</h2>
+      </section>
+
+      <section>
+        <h2>AI Coding 四大價值</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>價值</th>
+              <th>說明</th>
+              <th>實例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>加速開發</strong></td>
+              <td>減少打字、查文件的時間</td>
+              <td>寫函式從 30 分鐘 → 3 分鐘</td>
+            </tr>
+            <tr>
+              <td><strong>降低門檻</strong></td>
+              <td>不熟的語言也能寫</td>
+              <td>PM 也能做簡單的數據分析</td>
+            </tr>
+            <tr>
+              <td><strong>減少錯誤</strong></td>
+              <td>AI 會檢查常見問題</td>
+              <td>自動發現 SQL Injection 風險</td>
+            </tr>
+            <tr>
+              <td><strong>知識擴展</strong></td>
+              <td>邊做邊學</td>
+              <td>不懂的語法 AI 會解釋</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>不同角色的應用場景</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>角色</th>
+              <th>常見用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>工程師</strong></td>
+              <td>寫程式、Debug、Code Review、重構</td>
+            </tr>
+            <tr>
+              <td><strong>PM</strong></td>
+              <td>寫數據分析腳本、產生報表</td>
+            </tr>
+            <tr>
+              <td><strong>設計師</strong></td>
+              <td>快速做 Prototype、調整 CSS</td>
+            </tr>
+            <tr>
+              <td><strong>QA</strong></td>
+              <td>寫測試腳本、自動化測試</td>
+            </tr>
+            <tr>
+              <td><strong>非技術人員</strong></td>
+              <td>整理資料、批次改檔名、簡單自動化</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ================================
+           1.4 VSCode 操作完整教學
+           ================================ -->
+      <section>
+        <h2>1.4 VSCode 操作完整教學</h2>
+      </section>
+
+      <section>
+        <h2>四種開啟方式</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>方式</th>
+              <th>操作</th>
+              <th>適用情境</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>編輯器工具列</strong></td>
+              <td>點擊右上角 ✱ 圖示</td>
+              <td>最快方式（需開啟檔案）</td>
+            </tr>
+            <tr>
+              <td><strong>狀態列</strong></td>
+              <td>點擊右下角「✱ Claude Code」</td>
+              <td>無需開啟檔案也能用</td>
+            </tr>
+            <tr>
+              <td><strong>命令面板</strong></td>
+              <td><code>Ctrl+Shift+P</code> → 輸入 "Claude Code"</td>
+              <td>快速啟動、進階選項</td>
+            </tr>
+            <tr>
+              <td><strong>終端機</strong></td>
+              <td>輸入 <code>claude</code></td>
+              <td>CLI 進階操作</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip-box">
+          Spark 圖示 ✱ 是 Claude Code 的標誌
+        </div>
+      </section>
+
+      <section>
+        <h2>VSCode 介面說明</h2>
+        <div class="chat-demo">
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1em; height: 300px;">
+            <div style="background: var(--bg-tertiary); border-radius: 8px; padding: 1em;">
+              <div style="color: var(--accent-green); font-weight: 600; margin-bottom: 1em;">Claude 側邊欄</div>
+              <div style="background: var(--bg-primary); border-radius: 8px; padding: 0.8em; height: 150px; margin-bottom: 0.5em;">
+                <div style="font-size: 0.8em; color: var(--text-muted);">對話視窗</div>
+              </div>
+              <div style="background: var(--bg-primary); border-radius: 8px; padding: 0.5em; font-size: 0.8em; color: var(--text-muted);">
+                [輸入框]
+              </div>
+            </div>
+            <div style="background: var(--bg-tertiary); border-radius: 8px; padding: 1em;">
+              <div style="color: var(--text-muted); margin-bottom: 1em;">程式碼編輯區</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>關鍵操作</h2>
+        <ul>
+          <li><strong>對話視窗</strong>：和 Claude 對話的地方</li>
+          <li><strong>檔案互動</strong>：可以拖曳檔案到對話框</li>
+          <li><strong>右鍵選單</strong>：選取程式碼 → 右鍵 → "Ask Claude"</li>
+          <li><strong>Diff View</strong>：Claude 建議修改時，會顯示差異比較</li>
+          <li><strong>接受/拒絕</strong>：綠色勾勾接受、紅色叉叉拒絕</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>特殊符號操作</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>符號</th>
+              <th>功能</th>
+              <th>範例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>@</code></td>
+              <td>提及檔案或資料夾</td>
+              <td><code>@src/utils.js 這個函式是做什麼的?</code></td>
+            </tr>
+            <tr>
+              <td><code>/</code></td>
+              <td>斜線指令</td>
+              <td><code>/help</code>、<code>/clear</code>、<code>/compact</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>@ 符號詳解</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>用法</th>
+              <th>功能</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>@檔案名稱</code></td>
+              <td>讓 Claude 讀取這個檔案</td>
+            </tr>
+            <tr>
+              <td><code>@資料夾/</code></td>
+              <td>讓 Claude 讀取整個資料夾</td>
+            </tr>
+            <tr>
+              <td><code>@file.ts#5-10</code></td>
+              <td>指定檔案的第 5-10 行</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>輸入技巧</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>操作</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Shift+Enter</code></td>
+              <td>多行輸入（換行但不送出）</td>
+            </tr>
+            <tr>
+              <td>選取程式碼</td>
+              <td>Claude 會自動看到你選取的文字</td>
+            </tr>
+            <tr>
+              <td><code>Alt+K</code></td>
+              <td>快速插入 @-提及（含行號）</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>常用快捷鍵</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>快捷鍵</th>
+              <th>功能</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Ctrl+Esc</code></td>
+              <td>在編輯器和 Claude 之間切換焦點</td>
+            </tr>
+            <tr>
+              <td><code>Ctrl+Shift+Esc</code></td>
+              <td>開啟新的 Claude 對話標籤</td>
+            </tr>
+            <tr>
+              <td><code>Ctrl+N</code></td>
+              <td>新對話（Claude 獲得焦點時）</td>
+            </tr>
+            <tr>
+              <td><code>Alt+K</code></td>
+              <td>插入 @-提及</td>
+            </tr>
+            <tr>
+              <td><code>Esc</code></td>
+              <td>中斷 Claude 回應</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>必學斜線指令（上）</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>指令</th>
+              <th>功能</th>
+              <th>什麼時候用</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>/help</code></td>
+              <td>顯示說明</td>
+              <td>忘記指令時</td>
+            </tr>
+            <tr>
+              <td><code>/clear</code></td>
+              <td>清除對話</td>
+              <td>換主題、重新開始</td>
+            </tr>
+            <tr>
+              <td><code>/compact</code></td>
+              <td>壓縮對話</td>
+              <td>Context 快滿時</td>
+            </tr>
+            <tr>
+              <td><code>/context</code></td>
+              <td>查看 Context 用量</td>
+              <td>想知道還剩多少記憶空間</td>
+            </tr>
+            <tr>
+              <td><code>/init</code></td>
+              <td>建立 CLAUDE.md</td>
+              <td>新專案開始時</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>必學斜線指令（下）</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>指令</th>
+              <th>功能</th>
+              <th>什麼時候用</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>/usage</code></td>
+              <td>查看使用情況</td>
+              <td>監控 API 用量和花費</td>
+            </tr>
+            <tr>
+              <td><code>/model</code></td>
+              <td>切換模型</td>
+              <td>換 Opus/Sonnet/Haiku</td>
+            </tr>
+            <tr>
+              <td><code>/plugins</code></td>
+              <td>管理 Plugins</td>
+              <td>安裝、啟用、停用外掛</td>
+            </tr>
+            <tr>
+              <td><code>/mcp</code></td>
+              <td>MCP 設定</td>
+              <td>連接外部工具、資料庫</td>
+            </tr>
+            <tr>
+              <td><code>/permissions</code></td>
+              <td>管理權限</td>
+              <td>設定安全規則</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>進階功能：擴展思考</h2>
+        <p>讓 Claude 花更多時間推理複雜問題</p>
+        <p><strong>開啟方式：</strong>輸入 <code>/</code> 開啟命令選單 → 選擇「擴展思考」</p>
+        <p style="margin-top: 1em;"><strong>適用情境：</strong></p>
+        <ul>
+          <li>複雜的架構設計</li>
+          <li>多步驟的邏輯推理</li>
+          <li>需要權衡多個方案</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>進階功能：恢復對話</h2>
+        <p>Claude Code 會保留你的對話歷史</p>
+        <p><strong>操作方式：</strong></p>
+        <ul>
+          <li>點擊 Claude Code 面板頂部的下拉選單</li>
+          <li>可按關鍵字搜尋，或按時間瀏覽</li>
+          <li>點擊任何對話即可恢復</li>
+        </ul>
+        <p style="margin-top: 1em;"><strong>CLI 恢復：</strong><code>claude --resume</code></p>
+      </section>
+
+      <section>
+        <h2>進階指令：/rewind</h2>
+        <p><strong>功能：</strong>回溯對話，退回前幾步重來</p>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">/rewind</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              顯示對話歷史，讓你選要回到哪一步：<br>
+              [1] 幫我加登入功能<br>
+              [2] 改成用 JWT<br>
+              [3] 加上 refresh token ← 從這裡開始出問題<br>
+              [4] 改成存在 cookie
+            </div>
+          </div>
+        </div>
+        <p>選擇 2，對話就回到步驟 2，後面的修改都取消</p>
+      </section>
+
+      <section>
+        <h2>進階指令：/fork</h2>
+        <p><strong>功能：</strong>分叉對話，嘗試不同做法</p>
+        <div class="key-point">
+          <h4>使用情境</h4>
+          <p>想試試不同做法，但不確定哪個好</p>
+          <p>開啟一個新分支，保留目前所有對話內容</p>
+          <p>可以在分支裡嘗試 A 方案，原本的對話嘗試 B 方案</p>
+          <p>最後選一個比較好的繼續</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>進階指令：/export</h2>
+        <p><strong>功能：</strong>把對話匯出成 markdown 或 json 檔案</p>
+        <p style="margin-top: 1em;"><strong>用途：</strong></p>
+        <ul>
+          <li>分享給同事看</li>
+          <li>備份重要對話</li>
+          <li>寫文件時引用</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Output Style 三種模式</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>模式</th>
+              <th>說明</th>
+              <th>適合誰</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Default</strong></td>
+              <td>高效完成任務，回答簡潔</td>
+              <td>熟練的開發者、趕時間</td>
+            </tr>
+            <tr>
+              <td><strong>Explanatory</strong></td>
+              <td>解釋實作選擇和程式碼模式</td>
+              <td>想了解「為什麼這樣寫」</td>
+            </tr>
+            <tr>
+              <td><strong>Learning</strong></td>
+              <td>會暫停並請你親手寫一小段</td>
+              <td>想學習、練習的人</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 1em;"><strong>設定方式：</strong>用 <code>/config</code> 指令</p>
+      </section>
+
+      <!-- ================================
+           1.5 CLI 版簡介
+           ================================ -->
+      <section>
+        <h2>1.5 CLI 版簡介</h2>
+      </section>
+
+      <section>
+        <h2>CLI 版怎麼用？</h2>
+        <p>在終端機直接輸入 <code>claude</code> 就可以啟動：</p>
+        <pre><code class="language-bash"># 基本啟動
+claude
+
+# 帶問題啟動
+claude "這個專案是做什麼的？"
+
+# 用 Plan 模式
+claude -p "分析這個功能的架構"
+
+# 指定模型
+claude --model opus "幫我重構這段程式碼"</code></pre>
+      </section>
+
+      <section>
+        <h2>VSCode vs CLI 功能差異</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>功能</th>
+              <th>CLI 版</th>
+              <th>VSCode 版</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>全部斜線指令</td>
+              <td>✅ 全部支援</td>
+              <td>⚠️ 部分支援</td>
+            </tr>
+            <tr>
+              <td>MCP Server 設定</td>
+              <td>✅ 可設定</td>
+              <td>❌ 需透過 CLI</td>
+            </tr>
+            <tr>
+              <td>Diff View 視覺化</td>
+              <td>⚠️ 文字版</td>
+              <td>✅ 圖形化比較</td>
+            </tr>
+            <tr>
+              <td>拖曳檔案</td>
+              <td>❌</td>
+              <td>✅ 支援</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>什麼時候用哪個？</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>情境</th>
+              <th>推薦版本</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>日常開發、需要看 Diff</td>
+              <td>✅ VSCode 版</td>
+            </tr>
+            <tr>
+              <td>遠端伺服器（SSH 連線）</td>
+              <td>✅ CLI 版</td>
+            </tr>
+            <tr>
+              <td>設定 MCP Server</td>
+              <td>✅ CLI 版</td>
+            </tr>
+            <tr>
+              <td>電腦很慢/記憶體不夠</td>
+              <td>✅ CLI 版（輕量快速）</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip-box">
+          本課程以 VSCode 版為主，但對話歷史共享，可跨版本恢復
+        </div>
+      </section>
+
+      <!-- ================================
+           1.6 專案管理原則
+           ================================ -->
+      <section>
+        <h2>1.6 專案管理原則</h2>
+      </section>
+
+      <section>
+        <h2>錯誤做法：一個專案硬幹到底</h2>
+        <pre><code>我的超大專案/
+├── 客戶A網站/
+├── 客戶B App/
+├── 內部工具/
+└── 測試專案/
+    └── CLAUDE.md  ← 一個 CLAUDE.md 管所有東西？</code></pre>
+        <div class="danger-box">
+          CLAUDE.md 會變得超長、不同專案的規則會衝突、Claude 容易搞混
+        </div>
+      </section>
+
+      <section>
+        <h2>正確做法：每個專案獨立</h2>
+        <pre><code>工作區/
+├── 客戶A網站/
+│   └── CLAUDE.md  ← 客戶 A 的技術棧、規範
+├── 客戶B App/
+│   └── CLAUDE.md  ← 客戶 B 的技術棧、規範
+├── 內部工具/
+│   └── CLAUDE.md  ← 內部規範
+└── 測試專案/
+    └── CLAUDE.md  ← 測試用設定</code></pre>
+      </section>
+
+      <section>
+        <h2>專案拆分四原則</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>原則</th>
+              <th>說明</th>
+              <th>範例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>業務邊界</strong></td>
+              <td>不同客戶/產品分開</td>
+              <td>客戶 A 和客戶 B 分開</td>
+            </tr>
+            <tr>
+              <td><strong>技術棧</strong></td>
+              <td>不同框架分開</td>
+              <td>React 和 Vue 專案分開</td>
+            </tr>
+            <tr>
+              <td><strong>團隊分工</strong></td>
+              <td>不同團隊負責的分開</td>
+              <td>前端和後端分開</td>
+            </tr>
+            <tr>
+              <td><strong>生命週期</strong></td>
+              <td>獨立部署的分開</td>
+              <td>微服務各自獨立</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ================================
+           實作練習與回顧
+           ================================ -->
+      <section>
+        <h2>實作練習</h2>
+        <p><strong>練習 1：基本操作</strong></p>
+        <ul>
+          <li>開啟 VS Code，打開任意檔案</li>
+          <li>點擊右上角 ✱ 圖示開啟 Claude</li>
+          <li>輸入：「列出這個資料夾有什麼檔案」</li>
+        </ul>
+        <p style="margin-top: 1em;"><strong>練習 2：檔案互動</strong></p>
+        <ul>
+          <li>用 <code>@</code> 提及一個檔案</li>
+          <li>拖曳一個檔案到對話框</li>
+          <li>選取程式碼 → 右鍵 → Ask Claude</li>
+        </ul>
+        <p style="margin-top: 1em;"><strong>練習 3：指令練習</strong></p>
+        <ul>
+          <li>執行 <code>/context</code> 查看 Context 用量</li>
+          <li>執行 <code>/help</code> 查看可用指令</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>本單元重點回顧</h2>
+        <div class="key-point">
+          <h4>核心觀念</h4>
+          <p><strong>1. 網頁版 = 顧問（給建議）、Claude Code = 工人（直接做）</strong></p>
+          <p><strong>2. Claude Code 能直接操作電腦，包括危險操作！</strong></p>
+          <p><strong>3. 用 @ 提及檔案、用 / 執行指令</strong></p>
+          <p><strong>4. 每個專案獨立，各有自己的 CLAUDE.md</strong></p>
+        </div>
+      </section>
+
+      <!-- ================================
+           結尾
+           ================================ -->
+      <section class="section-slide">
+        <h2>單元 1 完成！</h2>
+        <p style="color: var(--text-secondary); font-size: 1.2em;">下一單元：Context 工程與專案記憶</p>
+        <p style="margin-top: 2em;">
+          <a href="index.html" style="color: var(--accent-green);">← 返回目錄</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="單元2_Context工程與專案記憶.html" style="color: var(--accent-green);">下一單元 →</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>
