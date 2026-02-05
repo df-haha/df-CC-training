@@ -337,11 +337,6 @@
               <td>最快方式（需開啟檔案）</td>
             </tr>
             <tr>
-              <td><strong>狀態列</strong></td>
-              <td>點擊右下角「✱ Claude Code」</td>
-              <td>無需開啟檔案也能用</td>
-            </tr>
-            <tr>
               <td><strong>命令面板</strong></td>
               <td><code>Ctrl+Shift+P</code> → 輸入 "Claude Code"</td>
               <td>快速啟動、進階選項</td>
@@ -477,14 +472,6 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>Ctrl+Esc</code></td>
-              <td>在編輯器和 Claude 之間切換焦點</td>
-            </tr>
-            <tr>
-              <td><code>Ctrl+Shift+Esc</code></td>
-              <td>開啟新的 Claude 對話標籤</td>
-            </tr>
-            <tr>
               <td><code>Ctrl+N</code></td>
               <td>新對話（Claude 獲得焦點時）</td>
             </tr>
@@ -512,11 +499,6 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>/help</code></td>
-              <td>顯示說明</td>
-              <td>忘記指令時</td>
-            </tr>
-            <tr>
               <td><code>/clear</code></td>
               <td>清除對話</td>
               <td>換主題、重新開始</td>
@@ -535,6 +517,11 @@
               <td><code>/init</code></td>
               <td>建立 CLAUDE.md</td>
               <td>新專案開始時</td>
+            </tr>
+            <tr>
+              <td><code>/help</code></td>
+              <td>顯示說明</td>
+              <td>忘記指令時（CLI 限定）</td>
             </tr>
           </tbody>
         </table>
@@ -589,63 +576,6 @@
           <li>複雜的架構設計</li>
           <li>多步驟的邏輯推理</li>
           <li>需要權衡多個方案</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>進階功能：恢復對話</h2>
-        <p>Claude Code 會保留你的對話歷史</p>
-        <p><strong>操作方式：</strong></p>
-        <ul>
-          <li>點擊 Claude Code 面板頂部的下拉選單</li>
-          <li>可按關鍵字搜尋，或按時間瀏覽</li>
-          <li>點擊任何對話即可恢復</li>
-        </ul>
-        <p style="margin-top: 1em;"><strong>CLI 恢復：</strong><code>claude --resume</code></p>
-      </section>
-
-      <section>
-        <h2>進階指令：/rewind</h2>
-        <p><strong>功能：</strong>回溯對話，退回前幾步重來</p>
-        <div class="chat-demo">
-          <div class="chat-msg user">
-            <div class="sender">你</div>
-            <div class="content">/rewind</div>
-          </div>
-          <div class="chat-msg ai">
-            <div class="sender">Claude</div>
-            <div class="content">
-              顯示對話歷史，讓你選要回到哪一步：<br>
-              [1] 幫我加登入功能<br>
-              [2] 改成用 JWT<br>
-              [3] 加上 refresh token ← 從這裡開始出問題<br>
-              [4] 改成存在 cookie
-            </div>
-          </div>
-        </div>
-        <p>選擇 2，對話就回到步驟 2，後面的修改都取消</p>
-      </section>
-
-      <section>
-        <h2>進階指令：/fork</h2>
-        <p><strong>功能：</strong>分叉對話，嘗試不同做法</p>
-        <div class="key-point">
-          <h4>使用情境</h4>
-          <p>想試試不同做法，但不確定哪個好</p>
-          <p>開啟一個新分支，保留目前所有對話內容</p>
-          <p>可以在分支裡嘗試 A 方案，原本的對話嘗試 B 方案</p>
-          <p>最後選一個比較好的繼續</p>
-        </div>
-      </section>
-
-      <section>
-        <h2>進階指令：/export</h2>
-        <p><strong>功能：</strong>把對話匯出成 markdown 或 json 檔案</p>
-        <p style="margin-top: 1em;"><strong>用途：</strong></p>
-        <ul>
-          <li>分享給同事看</li>
-          <li>備份重要對話</li>
-          <li>寫文件時引用</li>
         </ul>
       </section>
 
@@ -734,8 +664,74 @@ claude --model opus "幫我重構這段程式碼"</code></pre>
               <td>❌</td>
               <td>✅ 支援</td>
             </tr>
+            <tr>
+              <td>裝 B 指數</td>
+              <td>✅ 高（黑底白字很專業）</td>
+              <td>⚠️ 普通</td>
+            </tr>
           </tbody>
         </table>
+      </section>
+
+      <!-- CLI 專屬進階功能 -->
+      <section>
+        <h2>CLI 專屬進階功能</h2>
+        <p class="big-text">以下功能目前只有 CLI 版支援</p>
+      </section>
+
+      <section>
+        <h2>/fork 指令（CLI 限定）</h2>
+        <p><strong>功能：</strong>分叉對話，嘗試不同做法</p>
+        <div class="key-point">
+          <h4>使用情境</h4>
+          <p>想試試不同做法，但不確定哪個好</p>
+          <p>開啟一個新分支，保留目前所有對話內容</p>
+          <p>可以在分支裡嘗試 A 方案，原本的對話嘗試 B 方案</p>
+          <p>最後選一個比較好的繼續</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>/export 指令（CLI 限定）</h2>
+        <p><strong>功能：</strong>把對話匯出成 markdown 或 json 檔案</p>
+        <p style="margin-top: 1em;"><strong>用途：</strong></p>
+        <ul>
+          <li>分享給同事看</li>
+          <li>備份重要對話</li>
+          <li>寫文件時引用</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>恢復對話（CLI 限定）</h2>
+        <p>Claude Code 會保留你的對話歷史</p>
+        <p><strong>操作方式：</strong></p>
+        <ul>
+          <li>輸入 <code>claude --resume</code> 恢復上一次對話</li>
+          <li>可按關鍵字搜尋，或按時間瀏覽</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>/rewind 指令（CLI 限定）</h2>
+        <p><strong>功能：</strong>回溯對話，退回前幾步重來</p>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="sender">你</div>
+            <div class="content">/rewind</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="sender">Claude</div>
+            <div class="content">
+              顯示對話歷史，讓你選要回到哪一步：<br>
+              [1] 幫我加登入功能<br>
+              [2] 改成用 JWT<br>
+              [3] 加上 refresh token ← 從這裡開始出問題<br>
+              [4] 改成存在 cookie
+            </div>
+          </div>
+        </div>
+        <p>選擇 2，對話就回到步驟 2，後面的修改都取消</p>
       </section>
 
       <section>
